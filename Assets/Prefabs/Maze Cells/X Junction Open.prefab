@@ -206,6 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8016878194023439161}
   - component: {fileID: 5334429452323505308}
+  - component: {fileID: -2847115536882720052}
   m_Layer: 0
   m_Name: X Junction Open
   m_TagString: Untagged
@@ -242,3 +243,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7513a0883b2ed4c78bfe279a42206ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-2847115536882720052
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8016878194023439165}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

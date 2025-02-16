@@ -2,39 +2,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MazeCellObject : MonoBehaviour
+
+
 {
 #if UNITY_EDITOR
-	static List<Stack<MazeCellObject>> pools;
+    private static List<Stack<MazeCellObject>> pools = new();
 
-	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-	static void ClearPools ()
-	{
-		if (pools == null)
-		{
-			pools = new();
-		}
-		else
-		{
-			for (int i = 0; i < pools.Count; i++)
-			{
-				pools[i].Clear();
-			}
-		}
-	}
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void ClearPools()
+    {
+        foreach (var pool in pools)
+        {
+            pool.Clear();
+        }
+    }
 #endif
 
 	[System.NonSerialized]
-	Stack<MazeCellObject> pool;
+	private Stack<MazeCellObject> pool;
 
 	public MazeCellObject GetInstance()
 	{
-		if (pool == null)
-		{
-			pool = new();
+		// Initialize the pool only once
+		pool ??= new Stack<MazeCellObject>();
+
 #if UNITY_EDITOR
-			pools.Add(pool);
+        if (!pools.Contains(pool))
+        {
+            pools.Add(pool);
+        }
 #endif
-		}
+
 		if (pool.TryPop(out MazeCellObject instance))
 		{
 			instance.gameObject.SetActive(true);
@@ -44,6 +42,7 @@ public class MazeCellObject : MonoBehaviour
 			instance = Instantiate(this);
 			instance.pool = pool;
 		}
+
 		return instance;
 	}
 
@@ -51,5 +50,17 @@ public class MazeCellObject : MonoBehaviour
 	{
 		pool.Push(this);
 		gameObject.SetActive(false);
+		Invoke(nameof(ReactivateWall), 0.1f); // Reactivate slightly later to ensure physics updates
 	}
+
+	private void ReactivateWall()
+	{
+		gameObject.SetActive(true);
+		if (GetComponent<Collider>() == null)
+		{
+			gameObject.AddComponent<BoxCollider>(); // Ensure collider exists after reactivation
+		}
+	}
+
+
 }

@@ -70,13 +70,14 @@ public struct Maze
 	{
 		// Check if coordinates are out of bounds
 		if (coordinates.x < 0 || coordinates.x >= size.x || coordinates.y < 0 || coordinates.y >= size.y)
-			return true; // Out-of-bounds is considered a wall
+			return true; // Out-of-bounds is a wall
 
 		int index = CoordinatesToIndex(coordinates);
 
-		// Check if the cell exists (we assume an uninitialized cell is a wall)
+		// Check if the cell exists (we assume uninitialized or empty cells are walls)
 		return index < 0 || index >= cells.Length || cells[index] == 0;
 	}
+
 
 
 
