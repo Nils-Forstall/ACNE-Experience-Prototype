@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using System.Collections.Generic;
 
 using static Unity.Mathematics.math;
 
@@ -34,19 +35,23 @@ public class Game : MonoBehaviour
 	[SerializeField]
 	TextMeshPro displayText;
 
+	[SerializeField]
+	TextMeshPro guidanceText;
+
 	Maze maze;
 
 	Scent scent;
+
+	List<int2> solutionPath;
 
 	bool isPlaying;
 
 	MazeCellObject[] cellObjects;
 
-	void StartNewGame ()
+	void createMaze()
 	{
-		isPlaying = true;
-		displayText.gameObject.SetActive(false);
 		maze = new Maze(mazeSize);
+
 		scent = new Scent(maze);
 		new FindDiagonalPassagesJob
 		{
@@ -62,6 +67,7 @@ public class Game : MonoBehaviour
 			}.Schedule()
 		).Complete();
 
+
 		if (cellObjects == null || cellObjects.Length != maze.Length)
 		{
 			cellObjects = new MazeCellObject[maze.Length];
@@ -73,9 +79,37 @@ public class Game : MonoBehaviour
 			Random.InitState(seed);
 		}
 
-		player.StartNewGame(maze.CoordinatesToWorldPosition(
-			int2(Random.Range(0, mazeSize.x / 4), Random.Range(0, mazeSize.y / 4))
-		));
+	}
+
+	void StartNewGame()
+	{
+		isPlaying = true;
+		displayText.gameObject.SetActive(false);
+		createMaze();
+
+		MazeSolver solver = new MazeSolver(maze);
+		int startIndex = maze.CoordinatesToIndex(new int2(0, 0)); // Start at (0,0)
+		int endIndex = maze.CoordinatesToIndex(new int2(mazeSize.x - 1, mazeSize.y - 1)); // Goal at (maxX, maxY)
+		solutionPath = solver.Solve(startIndex, endIndex);
+
+		while (solutionPath.Count == 0)
+		{
+			createMaze();
+			solutionPath = solver.Solve(startIndex, endIndex);
+			isPlaying = false;
+		}
+
+		solver.Dispose();
+		isPlaying = true;
+
+		foreach (var step in solutionPath)
+		{
+			Debug.Log($"Path Step: {step}");
+		}
+
+
+		// int2(Random.Range(0, mazeSize.x / 4), Random.Range(0, mazeSize.y / 4))
+		player.StartNewGame(maze.CoordinatesToWorldPosition(int2(0, 0)));
 
 		int2 halfSize = mazeSize / 2;
 		for (int i = 0; i < agents.Length; i++)
@@ -97,7 +131,7 @@ public class Game : MonoBehaviour
 		}
 	}
 
-	void Update ()
+	void Update()
 	{
 		if (isPlaying)
 		{
@@ -110,27 +144,112 @@ public class Game : MonoBehaviour
 		}
 	}
 
-	void UpdateGame ()
+	void UpdateGame()
 	{
 		Vector3 playerPosition = player.Move();
 		NativeArray<float> currentScent = scent.Disperse(maze, playerPosition);
+
+		// Guide the player towards the solution path
+		UpdateGuidance(playerPosition);
+
 		for (int i = 0; i < agents.Length; i++)
 		{
 			Vector3 agentPosition = agents[i].Move(currentScent);
-			if (
-				new Vector2(
-					agentPosition.x - playerPosition.x,
-					agentPosition.z - playerPosition.z
-				).sqrMagnitude < 1f
-			)
+			if (new Vector2(agentPosition.x - playerPosition.x, agentPosition.z - playerPosition.z).sqrMagnitude < 1f)
 			{
 				EndGame(agents[i].TriggerMessage);
 				return;
 			}
 		}
 	}
+	void UpdateGuidance(Vector3 playerPosition)
+	{
+		if (solutionPath == null || solutionPath.Count == 0) return;
 
-	void EndGame (string message)
+		int2 playerCoords = maze.WorldPositionToCoordinates(playerPosition);
+		float closestDistance = float.MaxValue;
+		int2 closestCell = playerCoords;
+		int nextStepIndex = 0;
+
+		// **Find the next best cell on the solution path (avoiding walls)**
+		for (int i = 0; i < solutionPath.Count; i++)
+		{
+			float distance = math.distance(playerCoords, solutionPath[i]);
+
+			if (distance < closestDistance)
+			{
+				closestDistance = distance;
+				closestCell = solutionPath[i];
+				nextStepIndex = i;
+			}
+		}
+
+		// **Look ahead for a safer movement direction**
+		int2 targetCell = closestCell;
+		if (nextStepIndex + 1 < solutionPath.Count)
+		{
+			int2 lookAheadCell = solutionPath[nextStepIndex + 1];
+			if (!maze.IsWall(lookAheadCell)) // Ensure it's not a wall
+			{
+				targetCell = lookAheadCell;
+			}
+		}
+
+		// Convert target cell to world space
+		Vector3 targetWorldPosition = maze.CoordinatesToWorldPosition(targetCell);
+		Vector3 targetDirection = (targetWorldPosition - playerPosition).normalized;
+
+		// Get player's current facing direction
+		Vector3 playerForward = player.transform.forward;
+		float angleToTarget = Vector3.SignedAngle(playerForward, targetDirection, Vector3.up);
+
+		// Normalize angle to shortest turn
+		angleToTarget = (angleToTarget + 360f) % 360f;
+		if (angleToTarget > 180f) angleToTarget -= 360f;
+
+		float rotationTolerance = 10f; // Angle threshold for minor corrections
+		float backwardThreshold = 150f; // Only move backward if the path is nearly behind you
+		string guidanceMessage = "";
+
+		// **Check for movement collisions before suggesting movement**
+		bool canMoveForward = !maze.IsWall(targetCell);
+		bool canMoveBackward = !maze.IsWall(maze.WorldPositionToCoordinates(playerPosition - playerForward));
+
+		// **Avoid collisions by prioritizing turns before movement**
+		if (math.abs(angleToTarget) <= rotationTolerance && canMoveForward)
+		{
+			guidanceMessage = "Move Forward ↑";
+		}
+		else if (math.abs(angleToTarget) >= backwardThreshold && canMoveBackward)
+		{
+			guidanceMessage = "Move Backward ↓";
+		}
+		else if (angleToTarget > 0)
+		{
+			guidanceMessage = "Turn Right ↻";
+		}
+		else
+		{
+			guidanceMessage = "Turn Left ↺";
+		}
+
+		// Display guidance message
+		Debug.Log(guidanceMessage);
+
+		// **Check if the player has reached the goal**
+		int2 goalPosition = solutionPath[solutionPath.Count - 1];
+		if (math.distance(playerCoords, goalPosition) < 1f)
+		{
+			guidanceText.text = "🎉 Congratulations! You reached the goal!";
+			Debug.Log("Player has reached the solution spot!");
+			isPlaying = false; // Stop game logic
+		}
+	}
+
+
+
+
+	void EndGame(string message)
 	{
 		isPlaying = false;
 		displayText.text = message;
@@ -148,7 +267,7 @@ public class Game : MonoBehaviour
 		OnDestroy();
 	}
 
-	void OnDestroy ()
+	void OnDestroy()
 	{
 		maze.Dispose();
 		scent.Dispose();

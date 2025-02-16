@@ -31,13 +31,13 @@ public struct Maze
 
 	public int StepW => -1;
 
-	public Maze (int2 size)
+	public Maze(int2 size)
 	{
 		this.size = size;
 		cells = new NativeArray<MazeFlags>(size.x * size.y, Allocator.Persistent);
 	}
 
-	public void Dispose ()
+	public void Dispose()
 	{
 		if (cells.IsCreated)
 		{
@@ -45,13 +45,13 @@ public struct Maze
 		}
 	}
 
-	public MazeFlags Set (int index, MazeFlags mask) =>
+	public MazeFlags Set(int index, MazeFlags mask) =>
 		cells[index] = cells[index].With(mask);
 
-	public MazeFlags Unset (int index, MazeFlags mask) =>
+	public MazeFlags Unset(int index, MazeFlags mask) =>
 		cells[index] = cells[index].Without(mask);
 
-	public int2 IndexToCoordinates (int index)
+	public int2 IndexToCoordinates(int index)
 	{
 		int2 coordinates;
 		coordinates.y = index / size.x;
@@ -59,24 +59,39 @@ public struct Maze
 		return coordinates;
 	}
 
-	public Vector3 CoordinatesToWorldPosition (int2 coordinates, float y = 0f) =>
+	public Vector3 CoordinatesToWorldPosition(int2 coordinates, float y = 0f) =>
 		new Vector3(
 			2f * coordinates.x + 1f - size.x,
 			y,
 			2f * coordinates.y + 1f - size.y
 		);
 
-	public Vector3 IndexToWorldPosition (int index, float y = 0f) =>
+	public bool IsWall(int2 coordinates)
+	{
+		// Check if coordinates are out of bounds
+		if (coordinates.x < 0 || coordinates.x >= size.x || coordinates.y < 0 || coordinates.y >= size.y)
+			return true; // Out-of-bounds is considered a wall
+
+		int index = CoordinatesToIndex(coordinates);
+
+		// Check if the cell exists (we assume an uninitialized cell is a wall)
+		return index < 0 || index >= cells.Length || cells[index] == 0;
+	}
+
+
+
+
+	public Vector3 IndexToWorldPosition(int index, float y = 0f) =>
 		CoordinatesToWorldPosition(IndexToCoordinates(index), y);
 
-	public int CoordinatesToIndex (int2 coordinates) =>
+	public int CoordinatesToIndex(int2 coordinates) =>
 		coordinates.y * size.x + coordinates.x;
 
-	public int2 WorldPositionToCoordinates (Vector3 position) => int2(
+	public int2 WorldPositionToCoordinates(Vector3 position) => int2(
 		(int)((position.x + size.x) * 0.5f),
 		(int)((position.z + size.y) * 0.5f)
 	);
 
-	public int WorldPositionToIndex (Vector3 position) =>
+	public int WorldPositionToIndex(Vector3 position) =>
 		CoordinatesToIndex(WorldPositionToCoordinates(position));
 }

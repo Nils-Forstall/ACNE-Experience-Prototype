@@ -22,11 +22,11 @@ public class MazeCellObject : MonoBehaviour
 		}
 	}
 #endif
-	 
+
 	[System.NonSerialized]
 	Stack<MazeCellObject> pool;
 
-	public MazeCellObject GetInstance ()
+	public MazeCellObject GetInstance()
 	{
 		if (pool == null)
 		{
@@ -47,7 +47,7 @@ public class MazeCellObject : MonoBehaviour
 		return instance;
 	}
 
-	public void Recycle ()
+	public void Recycle()
 	{
 		pool.Push(this);
 		gameObject.SetActive(false);
