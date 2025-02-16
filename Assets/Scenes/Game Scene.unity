@@ -154,7 +154,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a1768a202a9b1486280a177fdfd0aba5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -447,7 +447,8 @@ MonoBehaviour:
   openDeadEndProbability: 0.26
   openArbitraryProbability: 0
   player: {fileID: 2084950774}
-  agents: []
+  agents:
+  - {fileID: 1930307880}
   displayText: {fileID: 7270601477899884428}
   guidanceText: {fileID: 7270601477899884428}
 --- !u!4 &469549574
@@ -902,7 +903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: speed
-      value: 1.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: color.b
@@ -920,6 +921,10 @@ PrefabInstance:
       propertyPath: triggerMessage
       value: BLUE CAUGHT YOU
       objectReference: {fileID: 0}
+    - target: {fileID: 3929974398524426476, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a1768a202a9b1486280a177fdfd0aba5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
 --- !u!4 &1330302348 stripped
@@ -1042,6 +1047,17 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1930307880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
+  m_PrefabInstance: {fileID: 1330302340}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4097450c4323c4726bd18f5b6abacfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1981447391
 PrefabInstance:
   m_ObjectHideFlags: 0
