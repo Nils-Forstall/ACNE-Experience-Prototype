@@ -8,8 +8,6 @@ public class Player : MonoBehaviour
 
 	private bool isMovingForward;
 	private bool isMovingBackward;
-	public AudioSource forwardAudio;
-	public AudioSource backwardAudio;
 
 
 	[SerializeField]
@@ -70,31 +68,17 @@ public class Player : MonoBehaviour
 
 	void PlayForwardAudio()
 	{
-		if (!forwardAudio.isPlaying)
-		{
-			StopAudio();
-			forwardAudio.loop = true;  // Ensure looping
-			forwardAudio.Play();
-			isMovingForward = true;
-			isMovingBackward = false;
-		}
+		AudioManager.Instance.PlaySound("Bongo 2");
 	}
 
 	void PlayBackwardAudio()
 	{
-		if (!backwardAudio.isPlaying)
-		{
-			StopAudio();
-			backwardAudio.loop = true;  // Ensure looping
-			backwardAudio.Play();
-			isMovingForward = false;
-			isMovingBackward = true;
-		}
+		AudioManager.Instance.PlaySound("Bongo 1");
 	}
 	void StopAudio()
 	{
-		forwardAudio.Stop();
-		backwardAudio.Stop();
+		AudioManager.Instance.StopSound("Bongo 1");
+		AudioManager.Instance.StopSound("Bongo 2");
 		isMovingForward = false;
 		isMovingBackward = false;
 	}

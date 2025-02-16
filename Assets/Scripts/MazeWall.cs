@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class MazeWall : MonoBehaviour
 {
     public float detectionRange = 0.5f; // Distance at which camera is considered "colliding"
@@ -25,6 +26,7 @@ public class MazeWall : MonoBehaviour
             if (hit.collider.gameObject == gameObject)
             {
                 Debug.Log($"Collision: Player collided {gameObject.name} (Wall)");
+                AudioManager.Instance.PlaySound("Bongo 2");
             }
         }
     }
