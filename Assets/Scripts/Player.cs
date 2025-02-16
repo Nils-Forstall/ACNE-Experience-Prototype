@@ -5,6 +5,13 @@ public class Player : MonoBehaviour
 	[SerializeField, Min(0f)]
 	float movementSpeed = 4f, rotationSpeed = 180f;
 
+
+	private bool isMovingForward;
+	private bool isMovingBackward;
+	public AudioSource forwardAudio;
+	public AudioSource backwardAudio;
+
+
 	[SerializeField]
 	float startingVerticalEyeAngle = 10f;
 
@@ -35,14 +42,61 @@ public class Player : MonoBehaviour
 		UpdatePosition();
 		return transform.localPosition;
 	}
-
 	void UpdatePosition()
 	{
 		float forwardMovement = Input.GetAxis("Vertical") * movementSpeed;
-
-		// Move forward and backward in the direction the player is looking
 		Vector3 movement = eye.forward * forwardMovement;
 		characterController.Move(movement * Time.deltaTime);
+
+		if (forwardMovement > 0)
+		{
+			if (!isMovingForward)
+			{
+				PlayForwardAudio();
+			}
+		}
+		else if (forwardMovement < 0)
+		{
+			if (!isMovingBackward)
+			{
+				PlayBackwardAudio();
+			}
+		}
+		else
+		{
+			StopAudio();
+		}
+	}
+
+	void PlayForwardAudio()
+	{
+		if (!forwardAudio.isPlaying)
+		{
+			StopAudio();
+			forwardAudio.loop = true;  // Ensure looping
+			forwardAudio.Play();
+			isMovingForward = true;
+			isMovingBackward = false;
+		}
+	}
+
+	void PlayBackwardAudio()
+	{
+		if (!backwardAudio.isPlaying)
+		{
+			StopAudio();
+			backwardAudio.loop = true;  // Ensure looping
+			backwardAudio.Play();
+			isMovingForward = false;
+			isMovingBackward = true;
+		}
+	}
+	void StopAudio()
+	{
+		forwardAudio.Stop();
+		backwardAudio.Stop();
+		isMovingForward = false;
+		isMovingBackward = false;
 	}
 
 	void UpdateEyeAngles()
