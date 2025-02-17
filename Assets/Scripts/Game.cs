@@ -1,5 +1,6 @@
 using TMPro;
 using Unity.Collections;
+using System.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
@@ -100,7 +101,7 @@ public class Game : MonoBehaviour
 		}
 
 		solver.Dispose();
-		isPlaying = true;
+
 
 		foreach (var step in solutionPath)
 		{
@@ -108,8 +109,10 @@ public class Game : MonoBehaviour
 		}
 
 
-		// int2(Random.Range(0, mazeSize.x / 4), Random.Range(0, mazeSize.y / 4))
-		player.StartNewGame(maze.CoordinatesToWorldPosition(int2(0, 0)));
+				// add soundtrack
+		// AudioManager.Instance.PlaySound("soundtrack");
+		
+		player.StartNewGame(maze.CoordinatesToWorldPosition(int2(Random.Range(0, mazeSize.x / 4), Random.Range(0, mazeSize.y / 4))));
 
 		int2 halfSize = mazeSize / 2;
 		for (int i = 0; i < agents.Length; i++)
@@ -140,6 +143,7 @@ public class Game : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.Space))
 		{
 			StartNewGame();
+			AudioManager.Instance.PlaySound("Ding");
 			UpdateGame();
 		}
 	}
@@ -158,6 +162,8 @@ public class Game : MonoBehaviour
 			if (new Vector2(agentPosition.x - playerPosition.x, agentPosition.z - playerPosition.z).sqrMagnitude < 1f)
 			{
 				EndGame(agents[i].TriggerMessage);
+				AudioManager.Instance.PlaySound("Death Sound");
+
 				return;
 			}
 		}
@@ -242,30 +248,41 @@ public class Game : MonoBehaviour
 		{
 			guidanceText.text = "🎉 Congratulations! You reached the goal!";
 			Debug.Log("Player has reached the solution spot!");
-			isPlaying = false; // Stop game logic
+			// isPlaying = false; // Stop game logic
 		}
 	}
 
 
 
 
-	void EndGame(string message)
-	{
-		isPlaying = false;
-		displayText.text = message;
-		displayText.gameObject.SetActive(true);
-		for (int i = 0; i < agents.Length; i++)
-		{
-			agents[i].EndGame();
-		}
+void EndGame(string message)
+{
+    isPlaying = false;
+	OnDestroy();
 
-		for (int i = 0; i < cellObjects.Length; i++)
-		{
-			cellObjects[i].Recycle();
-		}
+    displayText.text = message;
+    displayText.gameObject.SetActive(true);
 
-		OnDestroy();
-	}
+    // Stop agents
+    for (int i = 0; i < agents.Length; i++)
+    {
+        agents[i].EndGame();
+    }
+
+	  // Clean up objects
+    if (cellObjects != null)
+    {
+        for (int i = 0; i < cellObjects.Length; i++)
+        {
+            if (cellObjects[i] != null)
+            {
+                Destroy(cellObjects[i].gameObject);
+            }
+        }
+    }
+
+	
+}
 
 	void OnDestroy()
 	{

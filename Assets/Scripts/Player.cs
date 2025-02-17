@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     private bool isMovingForward;
     private bool isMovingBackward;
 
+    private bool isTurningLeft;
+    private bool isTurningRight;
+
     private readonly object dataLock = new object();
 
     void Awake()
@@ -69,16 +72,45 @@ public class Player : MonoBehaviour
     }
 
     void UpdateEyeAngles(float currentCameraSpeed)
+{
+    float rotationDelta = rotationSpeed * Time.deltaTime;
+
+    // Use serial camera speed if available, otherwise fallback to keyboard input
+    float horizontalInput = serialAvailable ? currentCameraSpeed : Input.GetAxis("Horizontal");
+
+    eyeAngles.x += rotationDelta * horizontalInput;
+    eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
+    transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
+
+    // Determine turning direction based on input
+    if (horizontalInput > 0) // Turning Right
     {
-        float rotationDelta = rotationSpeed * Time.deltaTime;
-
-        // Use serial camera speed if available, otherwise fallback to keyboard input
-        float horizontalInput = serialAvailable ? currentCameraSpeed : Input.GetAxis("Horizontal");
-
-        eyeAngles.x += rotationDelta * horizontalInput;
-        eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
-        transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
+        if (!isTurningRight)
+        {
+            isTurningRight = true;
+            isTurningLeft = false;
+            TurnRight();
+        }
     }
+    else if (horizontalInput < 0) // Turning Left
+    {
+        if (!isTurningLeft)
+        {
+            isTurningLeft = true;
+            isTurningRight = false;
+            TurnLeft();
+        }
+    }
+    else // No input, stop the sound
+    {
+        if (isTurningLeft || isTurningRight)
+        {
+            isTurningLeft = false;
+            isTurningRight = false;
+            StopTurnAudio();
+        }
+    }
+}
 
     void UpdatePosition(float currentMoveSpeed)
     {
@@ -115,23 +147,39 @@ public class Player : MonoBehaviour
 
     void PlayForwardAudio()
     {
-        AudioManager.Instance.PlaySound("Bongo 2");
+        AudioManager.Instance.PlaySound("footsteps-01");
     }
 
     void PlayBackwardAudio()
     {
-        AudioManager.Instance.PlaySound("Bongo 1");
+        AudioManager.Instance.PlaySound("footsteps-02");
     }
 
+      void TurnRight() {
+        AudioManager.Instance.PlaySound("Tank Movement right");
+    }
+
+    void TurnLeft() {
+        AudioManager.Instance.PlaySound("Tank Movement left");
+    }
+
+
+void StopTurnAudio() {
+    AudioManager.Instance.StopSound("Tank Movement left");
+        AudioManager.Instance.StopSound("Tank Movement right");
+                isTurningLeft = false;
+        isTurningRight = false;
+}
     void StopAudio()
     {
-        AudioManager.Instance.StopSound("Bongo 1");
-        AudioManager.Instance.StopSound("Bongo 2");
+        AudioManager.Instance.StopSound("footsteps-01");
+        AudioManager.Instance.StopSound("footsteps-02");
         isMovingForward = false;
         isMovingBackward = false;
+
     }
 
-    // 🚀 **Serial Communication Setup**
+    // Serial Communication Setup
     void TryOpenSerialPort()
     {
         try

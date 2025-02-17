@@ -3,7 +3,15 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public class Agent : MonoBehaviour
+
 {
+
+	[SerializeField] float visionRange = 10f; // Max distance villain can see
+    [SerializeField] float visionAngle = 90f; // Field of view in degrees
+
+    [SerializeField] float detectionRange = 15f; 
+    [SerializeField] Transform player; // Reference to player
+
 	[SerializeField]
 	Color color = Color.white;
 
@@ -21,8 +29,12 @@ public class Agent : MonoBehaviour
 	int targetIndex;
 
 	Vector3 targetPosition;
+	bool alarmPlaying;
+	bool nearPlaying;
 
 	public string TriggerMessage => triggerMessage;
+
+
 
 	void Awake ()
 	{
@@ -41,6 +53,84 @@ public class Agent : MonoBehaviour
 			maze.CoordinatesToWorldPosition(coordinates, transform.localPosition.y);
 		gameObject.SetActive(true);
 	}
+	
+
+	void Update()
+    {
+		if (CanSeePlayer())
+        {
+			playAlarm();
+        } else {
+			stopAlarm();
+		}
+		if (IsNearPlayer()){
+			Debug.Log("Player near you!");
+			playNear();
+		} else {
+			stopNear();
+		}
+        
+    }
+
+
+	void playNear(){
+		if (!nearPlaying){
+			AudioManager.Instance.PlaySound("Blue Box v2");
+			nearPlaying = true;
+		}
+	}
+
+	void stopNear(){
+		AudioManager.Instance.StopSound("Blue Box v2");
+		nearPlaying = false;
+	}
+
+
+	void playAlarm(){
+		if (!alarmPlaying) {
+			AudioManager.Instance.PlaySound("Alarm");
+			alarmPlaying = true;
+		}
+	}
+
+	void stopAlarm(){
+		AudioManager.Instance.StopSound("Alarm");
+		alarmPlaying = false;
+	}
+
+
+
+	private bool IsNearPlayer()
+    {
+        if (player == null) return false;
+        return Vector3.Distance(transform.position, player.position) <= detectionRange;
+    }
+	
+
+    bool CanSeePlayer()
+    {
+        if (player == null) return false;
+
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // Check distance
+        if (distanceToPlayer > visionRange) return false;
+
+        // Check FOV
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        if (angleToPlayer > visionAngle / 2) return false;
+
+		LayerMask obstacleMask =  LayerMask.GetMask("Obstacles");
+
+        // Raycast to check if there's an obstacle blocking view
+        if (Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, visionRange, obstacleMask))
+        {
+            if (hit.collider.transform != player) return false; // Something is blocking the view
+        }
+
+        return true; // Player is visible
+    }
 
 	public void EndGame () => gameObject.SetActive(false);
 
