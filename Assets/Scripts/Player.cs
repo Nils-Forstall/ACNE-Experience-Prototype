@@ -14,6 +14,18 @@ public class Player : MonoBehaviour
     private Transform eye;
     private Vector2 eyeAngles;
 
+
+
+    [SerializeField]     // for controller
+    float minMoveSpeed = 0.1f, maxMoveSpeed = 5f; 
+
+    [SerializeField]     // for controller
+
+    float minTurnSpeed = 0.1f, maxTurnSpeed = 2f; // Min & Max Rotation Speed
+
+    [SerializeField]     // for controller
+    float movementTolerance = 0.5f
+
     // Serial communication variables
     public string portName = "/dev/cu.usbserial-AQ02O6OD";
     public int baudRate = 115200;
@@ -58,12 +70,22 @@ public class Player : MonoBehaviour
         float currentMoveSpeed = 0f;
         float currentCameraSpeed = 0f;
 
+       
+
         // Retrieve shared data with thread safety
         lock (dataLock)
         {
             currentMoveSpeed = moveSpeed;
             currentCameraSpeed = cameraSpeed;
         }
+
+        // clamp to min and max speed
+        currentMoveSpeed = Mathf.Clamp(currentMoveSpeed, minMoveSpeed, maxMoveSpeed);
+        currentCameraSpeed = Mathf.Clamp(currentCameraSpeed, minTurnSpeed, maxTurnSpeed);
+
+        // Ignore small fluctuations (tolerance)
+        if (Mathf.Abs(currentMoveSpeed) < movementTolerance) currentMoveSpeed = 0;
+        if (Mathf.Abs(currentCameraSpeed) < movementTolerance) currentCameraSpeed = 0;
 
         UpdateEyeAngles(currentCameraSpeed);
         UpdatePosition(currentMoveSpeed);
