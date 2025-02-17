@@ -58,8 +58,7 @@ public class AudioManager : MonoBehaviour
         LoadSoundSettings();
     }
 
-    private void Update()
-    {
+    private void Update(){
         UpdateSoundSettings();
     }
 

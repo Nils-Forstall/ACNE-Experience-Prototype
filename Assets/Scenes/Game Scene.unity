@@ -439,7 +439,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140068083}
-  - component: {fileID: 1140068084}
   m_Layer: 0
   m_Name: Walking Forward
   m_TagString: Untagged
