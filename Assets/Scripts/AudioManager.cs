@@ -73,9 +73,9 @@ public class AudioManager : MonoBehaviour
                 { ""soundName"": ""Tank Movement left"", ""description"": ""Turning toward your left"", ""volume"": 11.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
                 { ""soundName"": ""Tank Movement right"", ""description"": ""Turning toward your right"", ""volume"": 11.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
                 { ""soundName"": ""Cowbell 2"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Alarm"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Blue Box v2"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Death Sound"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] }
+                { ""soundName"": ""Alarm"", ""description"": ""Enemy can see you"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Blue Box v2"", ""description"": ""Enemy is near you"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Death Sound"", ""description"": ""Losing the game"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] }
                 
             ]
         }";
