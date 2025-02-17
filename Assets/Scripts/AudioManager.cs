@@ -67,12 +67,20 @@ public class AudioManager : MonoBehaviour
         string jsonString = @"
         {
             ""sounds"": [
-                { ""soundName"": ""Bongo 1"", ""volume"": 11.0, ""loop"": false, ""pitch"": [0.8, 1.2] },
-                { ""soundName"": ""Bongo 2"", ""volume"": 0.5, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Bongo 3"", ""volume"": 0.3, ""loop"": false, ""pitch"": [0.9, 1.1] },
-                { ""soundName"": ""Bongo 4"", ""volume"": 0.2, ""loop"": true, ""pitch"": [1.0, 1.0] }
+                { ""soundName"": ""footsteps-01"",""description"": ""Walking forward"", ""volume"": 4.0, ""loop"": true, ""pitch"": [0.8, 1.2] },
+                { ""soundName"": ""footsteps-02"", ""description"": ""Walking backward"", ""volume"": 4.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Ding"", ""description"": ""Start game"", ""volume"": 11.0, ""loop"": false, ""pitch"": [0.9, 1.1] },
+                { ""soundName"": ""Tank Movement left"", ""description"": ""Turning toward your left"", ""volume"": 11.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Tank Movement right"", ""description"": ""Turning toward your right"", ""volume"": 11.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Cowbell 2"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Alarm"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Blue Box v2"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
+                { ""soundName"": ""Death Sound"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] }
+                
             ]
         }";
+
+        // { ""soundName"": ""soundtrack"", ""description"": ""Game soundtrack"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] }
 
         SoundSettingsList settingsList = JsonUtility.FromJson<SoundSettingsList>(jsonString);
 
@@ -150,6 +158,8 @@ public class AudioManager : MonoBehaviour
         audioSource.pitch = (settings.pitch.Length == 2) ?
             Random.Range(settings.pitch[0], settings.pitch[1]) : settings.pitch[0];
     }
+
+
 
     /// <summary>
     /// Stops a specific sound.
