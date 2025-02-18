@@ -6,6 +6,344 @@ public class AudioManager : MonoBehaviour
 {
     private static AudioManager _instance;
 
+    private const string DEFAULT_JSON = @"
+{
+    ""sounds"": [
+        {
+            ""soundName"": ""Walk Forward"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": true,
+            ""priority"": 128,
+            ""volume"": 0.7,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 1.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Walk Backward"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": true,
+            ""priority"": 128,
+            ""volume"": 0.7,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 1.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Turn Left"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.6,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Turn Right"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.6,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Villain Near"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": true,
+            ""priority"": 128,
+            ""volume"": 0.8,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 1.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Villain Can See You"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 100,
+            ""volume"": 1.0,
+            ""pitch"": 1.2,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 1.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Collide With Wall"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.5,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 1.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Linear""
+        },
+        {
+            ""soundName"": ""Death"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 0,
+            ""volume"": 1.0,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Win"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.9,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Distance From Solution Path"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": true,
+            ""priority"": 128,
+            ""volume"": 0.4,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 1.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Soundtrack"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": true,
+            ""loop"": true,
+            ""priority"": 0,
+            ""volume"": 0.5,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Player Guidance - Turn Left"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.7,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Player Guidance - Rotate Right"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.7,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Player Guidance - Move Forward"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.7,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        },
+        {
+            ""soundName"": ""Player Guidance - Move Backward"",
+            ""mute"": false,
+            ""spatialize"": false,
+            ""spatializePostEffect"": false,
+            ""bypassEffects"": false,
+            ""bypassListenerEffects"": false,
+            ""bypassReverbZones"": false,
+            ""playOnAwake"": false,
+            ""loop"": false,
+            ""priority"": 128,
+            ""volume"": 0.7,
+            ""pitch"": 1.0,
+            ""stereoPan"": 0.0,
+            ""spatialBlend"": 0.0,
+            ""reverbZoneMix"": 1.0,
+            ""dopplerLevel"": 1.0,
+            ""spread"": 0.0,
+            ""minDistance"": 1.0,
+            ""maxDistance"": 500.0,
+            ""rolloffMode"": ""Logarithmic""
+        }
+    ]
+}
+";
+
+
     public static AudioManager Instance
     {
         get
@@ -26,11 +364,37 @@ public class AudioManager : MonoBehaviour
     [System.Serializable]
     public class SoundSettings
     {
-        public string soundName;  // Added this field to map settings correctly
-        public float volume;
+        public string soundName;           // "Walk Forward", "Villain Near", etc.
+
+        public bool mute;                  // audioSource.mute
+        public bool spatialize;            // audioSource.spatialize
+        public bool spatializePostEffect;  // audioSource.spatializePostEffects
+        public bool bypassEffects;
+        public bool bypassListenerEffects;
+        public bool bypassReverbZones;
+        public bool playOnAwake;
         public bool loop;
-        public float[] pitch; // Can be a range
+        public int priority;
+        public float volume;
+
+        // If your JSON uses a single float for pitch, do this:
+        public float pitch;                // audioSource.pitch
+
+        // If you?d prefer a random pitch range, you can revert to an array:
+        // public float[] pitch;
+
+        public float stereoPan;            // audioSource.panStereo
+        public float spatialBlend;         // audioSource.spatialBlend
+        public float reverbZoneMix;        // audioSource.reverbZoneMix
+        public float dopplerLevel;         // audioSource.dopplerLevel
+        public float spread;               // audioSource.spread
+        public float minDistance;          // audioSource.minDistance
+        public float maxDistance;          // audioSource.maxDistance
+
+        // This is a string in JSON that you'll convert to the AudioRolloffMode enum
+        public string rolloffMode;         // "Logarithmic", "Linear", or "Custom"
     }
+
 
     [System.Serializable]
     public class SoundSettingsList
@@ -62,27 +426,11 @@ public class AudioManager : MonoBehaviour
         UpdateSoundSettings();
     }
 
-    private void LoadSoundSettings()
+public void LoadSoundSettings(string customJson = null)
     {
-        string jsonString = @"
-        {
-            ""sounds"": [
-                { ""soundName"": ""footsteps-01"",""description"": ""Walking forward"", ""volume"": 4.0, ""loop"": true, ""pitch"": [0.8, 1.2] },
-                { ""soundName"": ""footsteps-02"", ""description"": ""Walking backward"", ""volume"": 4.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Ding"", ""description"": ""Start game"", ""volume"": 11.0, ""loop"": false, ""pitch"": [0.9, 1.1] },
-                { ""soundName"": ""Tank Movement left"", ""description"": ""Turning toward your left"", ""volume"": 11.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Tank Movement right"", ""description"": ""Turning toward your right"", ""volume"": 11.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Cowbell 2"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Alarm"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Blue Box v2"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] },
-                { ""soundName"": ""Death Sound"", ""description"": ""Colliding with the wall"", ""volume"": 20.0, ""loop"": false, ""pitch"": [1.0, 1.0] }
-                
-            ]
-        }";
+        string finalJson = string.IsNullOrEmpty(customJson) ? DEFAULT_JSON : customJson;
 
-        // { ""soundName"": ""soundtrack"", ""description"": ""Game soundtrack"", ""volume"": 20.0, ""loop"": true, ""pitch"": [1.0, 1.0] }
-
-        SoundSettingsList settingsList = JsonUtility.FromJson<SoundSettingsList>(jsonString);
+        SoundSettingsList settingsList = JsonUtility.FromJson<SoundSettingsList>(finalJson);
 
         if (settingsList == null || settingsList.sounds == null)
         {
@@ -90,6 +438,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        // Clear old settings if needed
+        _soundSettings.Clear();
+
+        // Populate _soundSettings
         foreach (SoundSettings sound in settingsList.sounds)
         {
             _soundSettings[sound.soundName] = sound;
@@ -98,6 +450,8 @@ public class AudioManager : MonoBehaviour
         // Apply updates to currently playing sounds
         UpdateSoundSettings();
     }
+
+
 
     /// <summary>
     /// Plays a sound using AI-configured settings.
@@ -151,16 +505,57 @@ public class AudioManager : MonoBehaviour
 
         SoundSettings settings = _soundSettings[soundName];
 
-        audioSource.volume = settings.volume;
+        // --- Simple fields ---
+        audioSource.mute = settings.mute;
+        audioSource.spatialize = settings.spatialize;
+        audioSource.spatializePostEffects = settings.spatializePostEffect;
+        audioSource.bypassEffects = settings.bypassEffects;
+        audioSource.bypassListenerEffects = settings.bypassListenerEffects;
+        audioSource.bypassReverbZones = settings.bypassReverbZones;
+        audioSource.playOnAwake = settings.playOnAwake;
         audioSource.loop = settings.loop;
+        audioSource.priority = settings.priority;
+        audioSource.volume = settings.volume;
 
-        // Apply random pitch if a range is given
-        audioSource.pitch = (settings.pitch.Length == 2) ?
-            Random.Range(settings.pitch[0], settings.pitch[1]) : settings.pitch[0];
+        // If pitch is a single float:
+        audioSource.pitch = settings.pitch;
+
+        // If you keep pitch as an array (random range):
+        // if (settings.pitch != null && settings.pitch.Length == 2)
+        // {
+        //     audioSource.pitch = Random.Range(settings.pitch[0], settings.pitch[1]);
+        // }
+        // else
+        // {
+        //     audioSource.pitch = settings.pitch[0];
+        // }
+
+        audioSource.panStereo = settings.stereoPan;
+        audioSource.spatialBlend = settings.spatialBlend;
+        audioSource.reverbZoneMix = settings.reverbZoneMix;
+        audioSource.dopplerLevel = settings.dopplerLevel;
+        audioSource.spread = settings.spread;
+        audioSource.minDistance = settings.minDistance;
+        audioSource.maxDistance = settings.maxDistance;
+
+        // Convert the string rolloffMode to the Unity enum
+        switch (settings.rolloffMode)
+        {
+            case "Linear":
+                audioSource.rolloffMode = AudioRolloffMode.Linear;
+                break;
+            case "Custom":
+                audioSource.rolloffMode = AudioRolloffMode.Custom;
+                break;
+            default:
+                audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+                break;
+        }
     }
 
 
-public void StopAllSounds()
+
+    public void StopAllSounds()
 {
     foreach (var source in _audioSources.Values)
     {
