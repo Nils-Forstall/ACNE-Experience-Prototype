@@ -5,35 +5,24 @@ using System.Threading;
 public class Player : MonoBehaviour
 {
     [SerializeField, Min(0f)]
-    public float movementSpeed = 4f, rotationSpeed = 180f;
+    public float movementSpeed = .25f, rotationSpeed = 0.25f;
 
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
 
     [SerializeField]
-    public float MovementScalingFactor = 0.8f;
+    public float MovementScalingFactor = 0.001f;
 
     [SerializeField]
-    public float CameraScalingFactor = 0.8f;
+    public float CameraScalingFactor = 0.001f;
 
     private CharacterController characterController;
     private Transform eye;
     private Vector2 eyeAngles;
 
 
-
     [SerializeField]     // for controller
-    float minMoveSpeed = -10f, maxMoveSpeed = 10f; 
-
-    [SerializeField]     // for controller
-
-    float minTurnSpeed = -20f, maxTurnSpeed = 20f; // Min & Max Rotation Speed
-
-    [SerializeField]     // for controller
-    // float movementTolerance = 1f;
-
-    // Serial communication variables
-    public string portName = "/dev/cu.usbserial-AQ02O6OD";
+    public string portName = "/dev/tty.usbserial-1140";
     public int baudRate = 115200;
 
     private SerialPort serialPort;
@@ -71,14 +60,13 @@ public class Player : MonoBehaviour
         characterController.enabled = true;
     }
 
-    void UpdateEyeAngles(float currentCameraSpeed)
+    void UpdateEyeAngles()
 {
-    float rotationDelta = rotationSpeed * Time.deltaTime;
 
     // Use serial camera speed if available, otherwise fallback to keyboard input
-    float horizontalInput = serialAvailable ? currentCameraSpeed * CameraScalingFactor : Input.GetAxis("Horizontal");
+    float horizontalInput = serialAvailable ? cameraSpeed * CameraScalingFactor * rotationSpeed : Input.GetAxis("Horizontal") * rotationSpeed;
 
-    eyeAngles.x += rotationDelta * horizontalInput;
+    eyeAngles.x += horizontalInput;
     eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
     transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
 
@@ -112,11 +100,11 @@ public class Player : MonoBehaviour
     }
 }
 
-    void UpdatePosition(float currentMoveSpeed)
+    void UpdatePosition()
     {
         // Use serial movement speed if available, otherwise fallback to keyboard input
-        float forwardMovement = serialAvailable ? currentMoveSpeed * MovementScalingFactor * movementSpeed : Input.GetAxis("Vertical") * movementSpeed;
-		Debug.Log(forwardMovement);
+        float forwardMovement = serialAvailable ? 
+        moveSpeed * MovementScalingFactor * movementSpeed / 3 : Input.GetAxis("Vertical") * movementSpeed;
 
         Vector3 movement = eye.forward * forwardMovement;
         characterController.Move(movement * Time.deltaTime);
@@ -247,18 +235,13 @@ void StopTurnAudio() {
         }
     }
 
+    private void Update() {
+        UpdateEyeAngles();
+        UpdatePosition();
+    }
+
     public Vector3 Move()
     {
-
-        float currentMoveSpeed = 0f;
-        float currentCameraSpeed = 0f;
-
-        currentMoveSpeed = moveSpeed;
-        currentCameraSpeed = cameraSpeed;
-
-
-        UpdateEyeAngles(currentCameraSpeed );
-        UpdatePosition(currentMoveSpeed);
         return transform.localPosition;
     }
 
