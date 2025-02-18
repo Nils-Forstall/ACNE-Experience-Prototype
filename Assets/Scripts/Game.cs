@@ -145,9 +145,10 @@ public class Game : MonoBehaviour
 		{
 			StartNewGame();
 			AudioManager.Instance.PlaySound("Game Begin");
+			AudioManager.Instance.StopSound("Press Space to Start");
 			UpdateGame();
 		}
-		AudioManager.Instance.StopSound("Press Space to Start");
+		
 	}
 
 	void UpdateGame()

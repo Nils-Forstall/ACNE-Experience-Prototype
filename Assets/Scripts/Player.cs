@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         Vector3 movement = eye.forward * forwardMovement;
         characterController.Move(movement * Time.deltaTime);
 
-        if (forwardMovement > 0)
+        if (forwardMovement != 0)
         {
             if (!isMovingForward)
             {
@@ -153,15 +153,13 @@ public class Player : MonoBehaviour
 
 
 void StopTurnAudio() {
-    AudioManager.Instance.StopSound("Tank Movement left");
-        AudioManager.Instance.StopSound("Tank Movement right");
+    AudioManager.Instance.StopSound("Tank Movement");
                 isTurningLeft = false;
         isTurningRight = false;
 }
     void StopAudio()
     {
-        AudioManager.Instance.StopSound("footsteps-01");
-        AudioManager.Instance.StopSound("footsteps-02");
+        AudioManager.Instance.StopSound("ForwardBackward");
         isMovingForward = false;
         isMovingBackward = false;
 
