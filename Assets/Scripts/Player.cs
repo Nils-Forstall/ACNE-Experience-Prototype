@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
     {
         // Use serial movement speed if available, otherwise fallback to keyboard input
         float forwardMovement = serialAvailable ? 
-        moveSpeed * MovementScalingFactor * movementSpeed / 3 : Input.GetAxis("Vertical") * movementSpeed;
+        moveSpeed * MovementScalingFactor * movementSpeed / 3 : Input.GetAxis("Vertical") * movementSpeed * 3;
 
         Vector3 movement = eye.forward * forwardMovement;
         characterController.Move(movement * Time.deltaTime);
