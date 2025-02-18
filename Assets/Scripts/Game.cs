@@ -110,7 +110,7 @@ public class Game : MonoBehaviour
 
 
 				// add soundtrack
-		// AudioManager.Instance.PlaySound("soundtrack");
+		AudioManager.Instance.PlaySound("Press Space to Start");
 		
 		player.StartNewGame(maze.CoordinatesToWorldPosition(int2(Random.Range(0, mazeSize.x / 4), Random.Range(0, mazeSize.y / 4))));
 
@@ -136,6 +136,7 @@ public class Game : MonoBehaviour
 
 	void Update()
 	{
+		AudioManager.Instance.PlaySound("Press Space to Start");
 		if (isPlaying)
 		{
 			UpdateGame();
@@ -143,9 +144,10 @@ public class Game : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.Space))
 		{
 			StartNewGame();
-			AudioManager.Instance.PlaySound("Ding");
+			AudioManager.Instance.PlaySound("Game Begin");
 			UpdateGame();
 		}
+		AudioManager.Instance.StopSound("Press Space to Start");
 	}
 
 	void UpdateGame()
@@ -164,6 +166,7 @@ public class Game : MonoBehaviour
 				EndGame(agents[i].TriggerMessage);
 				AudioManager.Instance.StopAllSounds();
 				AudioManager.Instance.PlaySound("Death Sound");
+				AudioManager.Instance.PlaySound("You Died");
 				return;
 			}
 		}

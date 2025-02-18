@@ -88,7 +88,7 @@ public class Agent : MonoBehaviour
 
 	void playAlarm(){
 		if (!alarmPlaying) {
-			AudioManager.Instance.PlaySoundOn(gameObject, "Alarm + Blue Box");
+			AudioManager.Instance.PlaySoundOn(gameObject, "Alarm");
 			alarmPlaying = true;
 		}
 	}
