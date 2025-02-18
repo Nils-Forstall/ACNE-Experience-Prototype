@@ -57,7 +57,7 @@ public class Agent : MonoBehaviour
 
 	void Update()
     {
-		if (CanSeePlayer())
+		if (CanSeePlayer() && IsVeryNearPlayer())
         {
 			playAlarm();
         } else {
@@ -105,9 +105,14 @@ public class Agent : MonoBehaviour
         if (player == null) return false;
         return Vector3.Distance(transform.position, player.position) <= detectionRange;
     }
-	
 
-    bool CanSeePlayer()
+	private bool IsVeryNearPlayer()
+	{
+		if (player == null) return false;
+		return Vector3.Distance(transform.position, player.position) <= detectionRange/2;
+	}
+
+	bool CanSeePlayer()
     {
         if (player == null) return false;
 
