@@ -16,6 +16,8 @@ public class Game : MonoBehaviour
 	MazeVisualization visualization;
 
 	[SerializeField]
+
+	bool startPlaying; 
 	int2 mazeSize = int2(20, 20);
 
 	[SerializeField, Tooltip("Use zero for random seed.")]
@@ -87,7 +89,7 @@ public class Game : MonoBehaviour
 		isPlaying = true;
 		displayText.gameObject.SetActive(false);
 		createMaze();
-
+		
 		MazeSolver solver = new MazeSolver(maze);
 		int startIndex = maze.CoordinatesToIndex(new int2(0, 0)); // Start at (0,0)
 		int endIndex = maze.CoordinatesToIndex(new int2(mazeSize.x - 1, mazeSize.y - 1)); // Goal at (maxX, maxY)
@@ -136,17 +138,23 @@ public class Game : MonoBehaviour
 
 	void Update()
 	{
-		AudioManager.Instance.PlaySound("Press Space to Start");
 		if (isPlaying)
 		{
 			UpdateGame();
-		}
-		else if (Input.GetKeyDown(KeyCode.Space))
-		{
-			StartNewGame();
-			AudioManager.Instance.PlaySound("Game Begin");
-			AudioManager.Instance.StopSound("Press Space to Start");
-			UpdateGame();
+		} else {
+			if (!startPlaying) {
+				AudioManager.Instance.PlaySound("Press Space to Start");
+				startPlaying = true;
+				Debug.Log("Press space to start");
+			}
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				StartNewGame();
+				startPlaying = false;
+				AudioManager.Instance.PlaySound("Game Begin");
+				AudioManager.Instance.StopSound("Press Space to Start");
+				UpdateGame();
+			}
 		}
 		
 	}
