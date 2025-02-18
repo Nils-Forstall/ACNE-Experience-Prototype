@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
 	[SerializeField]
 
 	bool startPlaying; 
-	int2 mazeSize = int2(20, 20);
+	int2 mazeSize = int2(13, 13);
 
 	[SerializeField, Tooltip("Use zero for random seed.")]
 	int seed;
