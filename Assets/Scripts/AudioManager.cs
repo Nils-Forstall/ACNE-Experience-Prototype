@@ -5,6 +5,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager _instance;
+    public TextAsset soundSettingsFile;
+
 
     private const string DEFAULT_JSON = @"
 {
@@ -426,30 +428,35 @@ public class AudioManager : MonoBehaviour
         UpdateSoundSettings();
     }
 
-public void LoadSoundSettings(string customJson = null)
+public void LoadSoundSettings()
+{
+    if (soundSettingsFile == null)
     {
-        string finalJson = string.IsNullOrEmpty(customJson) ? DEFAULT_JSON : customJson;
-
-        SoundSettingsList settingsList = JsonUtility.FromJson<SoundSettingsList>(finalJson);
-
-        if (settingsList == null || settingsList.sounds == null)
-        {
-            Debug.LogError("Failed to parse sound settings JSON.");
-            return;
-        }
-
-        // Clear old settings if needed
-        _soundSettings.Clear();
-
-        // Populate _soundSettings
-        foreach (SoundSettings sound in settingsList.sounds)
-        {
-            _soundSettings[sound.soundName] = sound;
-        }
-
-        // Apply updates to currently playing sounds
-        UpdateSoundSettings();
+        Debug.LogError("No sound settings file assigned!");
+        return;
     }
+
+    // Read the text from the assigned TextAsset
+    string json = soundSettingsFile.text;
+
+    SoundSettingsList settingsList = JsonUtility.FromJson<SoundSettingsList>(json);
+
+    if (settingsList == null || settingsList.sounds == null)
+    {
+        Debug.LogError("Failed to parse sound settings JSON.");
+        return;
+    }
+
+    // Clear and populate
+    _soundSettings.Clear();
+    foreach (SoundSettings sound in settingsList.sounds)
+    {
+        _soundSettings[sound.soundName] = sound;
+    }
+
+    UpdateSoundSettings();
+}
+
 
 
 
