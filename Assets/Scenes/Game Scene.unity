@@ -191,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: speed
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: isGoal
@@ -265,11 +265,20 @@ MonoBehaviour:
     x: 20
     y: 20
   seed: 0
+<<<<<<< Updated upstream
   pickLastProbability: 0.5
   openDeadEndProbability: 0.5
   openArbitraryProbability: 0.5
   player: {fileID: 2084950774}
   agents: []
+=======
+  pickLastProbability: 0.201
+  openDeadEndProbability: 0.117
+  openArbitraryProbability: 0.88
+  player: {fileID: 2084950778}
+  agents:
+  - {fileID: 1930307880}
+>>>>>>> Stashed changes
   displayText: {fileID: 7270601477899884428}
   guidanceText: {fileID: 7270601477899884428}
 --- !u!4 &469549574
@@ -1017,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: speed
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: isGoal
@@ -1072,10 +1081,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2084950773}
   - component: {fileID: 2084950772}
-  - component: {fileID: 2084950774}
   - component: {fileID: 2084950775}
   - component: {fileID: 2084950776}
   - component: {fileID: 2084950777}
+  - component: {fileID: 2084950778}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1117,6 +1126,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
 --- !u!114 &2084950774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,6 +1150,8 @@ MonoBehaviour:
   maxTurnSpeed: 20
   portName: /dev/cu.usbserial-AQ02O6OD
   baudRate: 115200
+=======
+>>>>>>> Stashed changes
 --- !u!54 &2084950775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1265,6 +1277,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2084950778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084950771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a9b7a13cd754c04b32547c1bfc9cb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 4
+  rotationSpeed: 0.25
+  startingVerticalEyeAngle: 10
+  MovementScalingFactor: 0.01
+  CameraScalingFactor: 0.01
+  portName: /dev/tty.usbserial-1140
+  baudRate: 115200
 --- !u!23 &1436922957260777175
 MeshRenderer:
   m_ObjectHideFlags: 0
