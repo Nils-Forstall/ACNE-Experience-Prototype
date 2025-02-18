@@ -153,6 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6914038029993871166}
   - component: {fileID: 1479840729781146523}
+  - component: {fileID: -6114332074819663683}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Obstacles
@@ -183,7 +184,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5348236379170563488}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
@@ -272,3 +273,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6114332074819663683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5348236379170563488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1fa7f0ffd5643db9944acfafaf27db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 0.5

@@ -7,8 +7,11 @@ public class Player : MonoBehaviour
     [SerializeField, Min(0f)]
     public float movementSpeed = .25f, rotationSpeed = 0.25f;
 
+    float detectionRange = 0.5f;
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
+
+   private bool isColliding = false; // Tracks collision state
 
     [SerializeField]
     public float MovementScalingFactor = 0.001f;
@@ -234,9 +237,46 @@ void StopTurnAudio() {
     }
 
     private void Update() {
+        DetectCameraCollision();
         UpdateEyeAngles();
         UpdatePosition();
     }
+
+
+private void DetectCameraCollision()
+{
+    // Find the main camera
+    Camera playerCamera = Camera.main;
+    if (playerCamera == null) return;
+
+    // Cast a ray from the camera's position in the forward direction
+    Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+    RaycastHit hit;
+
+    Debug.Log($"Checking for collision");
+    if (Physics.Raycast(ray, out hit, detectionRange))
+    {
+        if (!isColliding) // Only play collision sound once per collision event
+        {
+            
+            Debug.Log($"Collision: Player collided with {hit.collider.gameObject.name} (Obstacle)");
+            AudioManager.Instance.StopSound("ForwardBackward");
+            AudioManager.Instance.PlaySound("Collision");
+            isColliding = true;
+        }
+    }
+    else
+    {
+        // If no collision detected, resume movement sound
+        if (isColliding)
+        {
+            AudioManager.Instance.StopSound("Collision");
+            AudioManager.Instance.PlaySound("ForwardBackward");
+            isColliding = false;
+        }
+    }
+}
+
 
     public Vector3 Move()
     {

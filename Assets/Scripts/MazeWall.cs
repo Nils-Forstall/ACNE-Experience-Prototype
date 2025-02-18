@@ -7,7 +7,7 @@ public class MazeWall : MonoBehaviour
 
     private void Update()
     {
-        DetectCameraCollision();
+        // DetectCameraCollision();
     }
 
     private void DetectCameraCollision()
@@ -27,7 +27,7 @@ public class MazeWall : MonoBehaviour
             {
                 Debug.Log($"Collision: Player collided {gameObject.name} (Wall)");
                 AudioManager.Instance.StopSound("ForwardBackward");
-                AudioManager.Instance.PlaySound("Collision");
+                AudioManager.Instance.PlaySound("Collision 2");
             }
         }
     }
