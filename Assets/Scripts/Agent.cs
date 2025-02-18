@@ -75,7 +75,7 @@ public class Agent : MonoBehaviour
 
 	void playNear(){
 		if (!nearPlaying){
-			AudioManager.Instance.PlaySound("Blue Box v2");
+			AudioManager.Instance.PlaySoundOn(gameObject, "Blue Box v2");
 			nearPlaying = true;
 		}
 	}
@@ -88,7 +88,7 @@ public class Agent : MonoBehaviour
 
 	void playAlarm(){
 		if (!alarmPlaying) {
-			AudioManager.Instance.PlaySound("Alarm");
+			AudioManager.Instance.PlaySoundOn(gameObject, "Alarm");
 			alarmPlaying = true;
 		}
 	}

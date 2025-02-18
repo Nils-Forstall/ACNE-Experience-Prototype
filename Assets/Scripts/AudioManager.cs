@@ -506,6 +506,41 @@ public void LoadSoundSettings()
         }
     }
 
+    public void PlaySoundOn(GameObject target, string soundName)
+    {
+        if (!_soundSettings.ContainsKey(soundName))
+        {
+            Debug.LogWarning($"Sound settings for '{soundName}' not found.");
+            return;
+        }
+        if (!_audioClipDict.ContainsKey(soundName))
+        {
+            Debug.LogWarning($"AudioClip '{soundName}' not found in assigned clips.");
+            return;
+        }
+
+        // Check if the target already has an AudioSource for this sound
+        AudioSource audioSource;
+        if (!_audioSources.ContainsKey(soundName) || !_audioSources[soundName])
+        {
+            audioSource = target.AddComponent<AudioSource>(); // Attach to the target (enemy)
+            _audioSources[soundName] = audioSource;  // Store reference in the dictionary
+        }
+        else
+        {
+            audioSource = _audioSources[soundName];
+        }
+
+        audioSource.clip = _audioClipDict[soundName];
+
+        // Apply settings from the JSON
+        ApplyAISoundSettings(soundName, audioSource);
+
+        // Play the sound at the enemy's position
+        audioSource.Play();
+    }
+
+
     private void ApplyAISoundSettings(string soundName, AudioSource audioSource)
     {
         if (!_soundSettings.ContainsKey(soundName)) return;
