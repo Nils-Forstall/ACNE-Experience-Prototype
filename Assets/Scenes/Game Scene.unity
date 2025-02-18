@@ -262,8 +262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualization: {fileID: 11400000, guid: e4a021dc00b784ff0bf7c21d81717b19, type: 2}
   mazeSize:
-    x: 20
-    y: 20
+    x: 13
+    y: 13
   seed: 0
   pickLastProbability: 0.5
   openDeadEndProbability: 0.5
@@ -621,7 +621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: speed
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: player
@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: triggerMessage
-      value: BLUE CAUGHT YOU
+      value: YOU DIED
       objectReference: {fileID: 0}
     - target: {fileID: 3929974398524426476, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: m_audioClip
