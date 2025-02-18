@@ -261,9 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualization: {fileID: 11400000, guid: e4a021dc00b784ff0bf7c21d81717b19, type: 2}
-  mazeSize:
-    x: 13
-    y: 13
+  startPlaying: 0
   seed: 0
   pickLastProbability: 0.5
   openDeadEndProbability: 0.5
@@ -1268,10 +1266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a9b7a13cd754c04b32547c1bfc9cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.35
-  rotationSpeed: 0.25
+  movementSpeed: 2
+  rotationSpeed: 1
   startingVerticalEyeAngle: 10
-  MovementScalingFactor: 0.001
+  MovementScalingFactor: 0.01
   CameraScalingFactor: 0.001
   portName: /dev/tty.usbserial-1140
   baudRate: 115200
