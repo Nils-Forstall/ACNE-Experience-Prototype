@@ -1,7 +1,7 @@
 {
   "sounds": [
     {
-      "soundName": "footsteps-01",
+      "soundName": "ForwardBackward",
       "description": "Walk Forward",
       "mute": false,
       "spatialize": false,
@@ -24,7 +24,7 @@
       "rolloffMode": "Logarithmic"
     },
     {
-      "soundName": "footsteps-02",
+      "soundName": "ForwardBackward",
       "description": "Walk Backward",
       "mute": false,
       "spatialize": false,
@@ -47,7 +47,7 @@
       "rolloffMode": "Logarithmic"
     },
     {
-      "soundName": "Tank Movement left",
+      "soundName": "Tank Movement",
       "description": "Turn Left",
       "mute": false,
       "spatialize": false,
@@ -70,7 +70,7 @@
       "rolloffMode": "Logarithmic"
     },
     {
-      "soundName": "Tank Movement right",
+      "soundName": "Tank Movement",
       "description": "Turn Right",
       "mute": false,
       "spatialize": false,
@@ -116,7 +116,7 @@
       "rolloffMode": "Logarithmic"
     },
     {
-      "soundName": "Alarm + Blue Box",
+      "soundName": "Alarm",
       "description": "Villain Can See You",
       "mute": false,
       "spatialize": false,
@@ -139,7 +139,7 @@
       "rolloffMode": "Logarithmic"
     },
     {
-      "soundName": "collision",
+      "soundName": "Collision",
       "description": "Collide With Wall",
       "mute": false,
       "spatialize": false,
@@ -164,6 +164,75 @@
     {
       "soundName": "Death Sound",
       "description": "Death",
+      "mute": false,
+      "spatialize": false,
+      "spatializePostEffect": false,
+      "bypassEffects": false,
+      "bypassListenerEffects": false,
+      "bypassReverbZones": false,
+      "playOnAwake": false,
+      "loop": false,
+      "priority": 0,
+      "volume": 1.0,
+      "pitch": 1.0,
+      "stereoPan": 0.0,
+      "spatialBlend": 0.0,
+      "reverbZoneMix": 1.0,
+      "dopplerLevel": 1.0,
+      "spread": 0.0,
+      "minDistance": 1.0,
+      "maxDistance": 500.0,
+      "rolloffMode": "Logarithmic"
+    },
+    {
+      "soundName": "Game Begin",
+      "description": "beginning of game",
+      "mute": false,
+      "spatialize": false,
+      "spatializePostEffect": false,
+      "bypassEffects": false,
+      "bypassListenerEffects": false,
+      "bypassReverbZones": false,
+      "playOnAwake": false,
+      "loop": false,
+      "priority": 0,
+      "volume": 1.0,
+      "pitch": 1.0,
+      "stereoPan": 0.0,
+      "spatialBlend": 0.0,
+      "reverbZoneMix": 1.0,
+      "dopplerLevel": 1.0,
+      "spread": 0.0,
+      "minDistance": 1.0,
+      "maxDistance": 500.0,
+      "rolloffMode": "Logarithmic"
+    },
+    {
+      "soundName": "Press Space to Start",
+      "description": "beginning of game",
+      "mute": false,
+      "spatialize": false,
+      "spatializePostEffect": false,
+      "bypassEffects": false,
+      "bypassListenerEffects": false,
+      "bypassReverbZones": false,
+      "playOnAwake": false,
+      "loop": false,
+      "priority": 0,
+      "volume": 1.0,
+      "pitch": 1.0,
+      "stereoPan": 0.0,
+      "spatialBlend": 0.0,
+      "reverbZoneMix": 1.0,
+      "dopplerLevel": 1.0,
+      "spread": 0.0,
+      "minDistance": 1.0,
+      "maxDistance": 500.0,
+      "rolloffMode": "Logarithmic"
+    },
+    {
+      "soundName": "You Died",
+      "description": "when you die",
       "mute": false,
       "spatialize": false,
       "spatializePostEffect": false,
