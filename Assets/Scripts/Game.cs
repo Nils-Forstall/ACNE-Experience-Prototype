@@ -162,8 +162,8 @@ public class Game : MonoBehaviour
 			if (new Vector2(agentPosition.x - playerPosition.x, agentPosition.z - playerPosition.z).sqrMagnitude < 1f)
 			{
 				EndGame(agents[i].TriggerMessage);
+				AudioManager.Instance.StopAllSounds();
 				AudioManager.Instance.PlaySound("Death Sound");
-
 				return;
 			}
 		}

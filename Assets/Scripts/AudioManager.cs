@@ -160,6 +160,14 @@ public class AudioManager : MonoBehaviour
     }
 
 
+public void StopAllSounds()
+{
+    foreach (var source in _audioSources.Values)
+    {
+        source.Stop();
+    }
+}
+
 
     /// <summary>
     /// Stops a specific sound.
