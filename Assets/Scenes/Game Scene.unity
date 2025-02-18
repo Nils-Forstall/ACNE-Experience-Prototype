@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0931316377e804e11947baf5a531dc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundSettingsFile: {fileID: 4900000, guid: 8b0d6f4e5b40842fba1d89642e61c61e, type: 3}
+  soundSettingsFile: {fileID: 4900000, guid: 2e25ca5c6b3fb490da7a344c1a6f3303, type: 3}
   audioClips:
   - {fileID: 8300000, guid: 4bbc0c57f92c348918df16dc294e7b4b, type: 3}
   - {fileID: 8300000, guid: e5fca72665eac40f7aedfd3109724ec4, type: 3}

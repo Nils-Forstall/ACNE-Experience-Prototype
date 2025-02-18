@@ -523,6 +523,11 @@ public void LoadSoundSettings()
         AudioSource audioSource;
         if (!_audioSources.ContainsKey(soundName) || !_audioSources[soundName])
         {
+            if (!_soundSettings[soundName].spatialize)
+            {
+                PlaySound(soundName);
+                return;
+            }
             audioSource = target.AddComponent<AudioSource>(); // Attach to the target (enemy)
             _audioSources[soundName] = audioSource;  // Store reference in the dictionary
         }
