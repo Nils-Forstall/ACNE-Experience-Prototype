@@ -26,6 +26,8 @@ public class MazeWall : MonoBehaviour
             if (hit.collider.gameObject == gameObject)
             {
                 Debug.Log($"Collision: Player collided {gameObject.name} (Wall)");
+                AudioManager.Instance.StopSound("footsteps-01");
+                AudioManager.Instance.StopSound("footsteps-02");
                 AudioManager.Instance.PlaySound("Cowbell 2");
             }
         }
