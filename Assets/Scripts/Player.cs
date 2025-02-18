@@ -10,6 +10,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
 
+    [SerializeField]
+    public float MovementScalingFactor = 0.8f;
+
+    [SerializeField]
+    public float CameraScalingFactor = 0.8f;
+
     private CharacterController characterController;
     private Transform eye;
     private Vector2 eyeAngles;
@@ -17,14 +23,14 @@ public class Player : MonoBehaviour
 
 
     [SerializeField]     // for controller
-    float minMoveSpeed = 0.1f, maxMoveSpeed = 5f; 
+    float minMoveSpeed = -10f, maxMoveSpeed = 10f; 
 
     [SerializeField]     // for controller
 
-    float minTurnSpeed = 0.1f, maxTurnSpeed = 2f; // Min & Max Rotation Speed
+    float minTurnSpeed = -20f, maxTurnSpeed = 20f; // Min & Max Rotation Speed
 
     [SerializeField]     // for controller
-    float movementTolerance = 0.5f
+    // float movementTolerance = 1f;
 
     // Serial communication variables
     public string portName = "/dev/cu.usbserial-AQ02O6OD";
@@ -43,7 +49,7 @@ public class Player : MonoBehaviour
     private bool isTurningLeft;
     private bool isTurningRight;
 
-    private readonly object dataLock = new object();
+    // private readonly object dataLock = new object();
 
     void Awake()
     {
@@ -65,40 +71,12 @@ public class Player : MonoBehaviour
         characterController.enabled = true;
     }
 
-    void Update()
-    {
-        float currentMoveSpeed = 0f;
-        float currentCameraSpeed = 0f;
-
-       
-
-        // Retrieve shared data with thread safety
-        lock (dataLock)
-        {
-            currentMoveSpeed = moveSpeed;
-            currentCameraSpeed = cameraSpeed;
-        }
-
-        // clamp to min and max speed
-        currentMoveSpeed = Mathf.Clamp(currentMoveSpeed, minMoveSpeed, maxMoveSpeed);
-        currentCameraSpeed = Mathf.Clamp(currentCameraSpeed, minTurnSpeed, maxTurnSpeed);
-
-        // Ignore small fluctuations (tolerance)
-        if (Mathf.Abs(currentMoveSpeed) < movementTolerance) currentMoveSpeed = 0;
-        if (Mathf.Abs(currentCameraSpeed) < movementTolerance) currentCameraSpeed = 0;
-
-        UpdateEyeAngles(currentCameraSpeed);
-        UpdatePosition(currentMoveSpeed);
-
-        Debug.Log("MoveSpeed: " + currentMoveSpeed + " | CameraSpeed: " + currentCameraSpeed);
-    }
-
     void UpdateEyeAngles(float currentCameraSpeed)
 {
     float rotationDelta = rotationSpeed * Time.deltaTime;
 
     // Use serial camera speed if available, otherwise fallback to keyboard input
-    float horizontalInput = serialAvailable ? currentCameraSpeed : Input.GetAxis("Horizontal");
+    float horizontalInput = serialAvailable ? currentCameraSpeed * CameraScalingFactor : Input.GetAxis("Horizontal");
 
     eyeAngles.x += rotationDelta * horizontalInput;
     eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
@@ -137,7 +115,7 @@ public class Player : MonoBehaviour
     void UpdatePosition(float currentMoveSpeed)
     {
         // Use serial movement speed if available, otherwise fallback to keyboard input
-        float forwardMovement = serialAvailable ? currentMoveSpeed * movementSpeed : Input.GetAxis("Vertical") * movementSpeed;
+        float forwardMovement = serialAvailable ? currentMoveSpeed * MovementScalingFactor * movementSpeed : Input.GetAxis("Vertical") * movementSpeed;
 		Debug.Log(forwardMovement);
 
         Vector3 movement = eye.forward * forwardMovement;
@@ -235,28 +213,30 @@ void StopTurnAudio() {
                 {
                     // Read and clean input
                     string dataLine = serialPort.ReadLine().Trim();
+      
                     if (string.IsNullOrEmpty(dataLine)) continue;
 
                     string[] tokens = dataLine.Split(',');
                     if (tokens.Length < 2) continue;
 
+
                     // Parse move speed
                     if (float.TryParse(tokens[0].Trim(), out float parsedMoveSpeed))
                     {
-                        lock (dataLock)
-                        {
-                            moveSpeed = parsedMoveSpeed;
-                        }
+                        moveSpeed = parsedMoveSpeed;
                     }
+
+                    Debug.Log("Data line - Move: " + moveSpeed);
 
                     // Parse camera speed
                     if (float.TryParse(tokens[1].Trim(), out float parsedCameraSpeed))
                     {
-                        lock (dataLock)
-                        {
-                            cameraSpeed = parsedCameraSpeed;
-                        }
+                        cameraSpeed = parsedCameraSpeed;
                     }
+
+                    Debug.Log("Data line - Camera: " + cameraSpeed);
+
+                    
                 }
             }
             catch (System.TimeoutException) { }
@@ -269,12 +249,15 @@ void StopTurnAudio() {
 
     public Vector3 Move()
     {
+
         float currentMoveSpeed = 0f;
-        lock (dataLock)
-        {
-            currentMoveSpeed = moveSpeed;
-        }
-        UpdateEyeAngles(currentMoveSpeed);
+        float currentCameraSpeed = 0f;
+
+        currentMoveSpeed = moveSpeed;
+        currentCameraSpeed = cameraSpeed;
+
+
+        UpdateEyeAngles(currentCameraSpeed );
         UpdatePosition(currentMoveSpeed);
         return transform.localPosition;
     }
