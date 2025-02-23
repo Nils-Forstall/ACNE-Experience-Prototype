@@ -261,9 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualization: {fileID: 11400000, guid: e4a021dc00b784ff0bf7c21d81717b19, type: 2}
-  mazeSize:
-    x: 13
-    y: 13
+  startPlaying: 0
   seed: 0
   pickLastProbability: 0.5
   openDeadEndProbability: 0.5
@@ -332,6 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 566776127}
   - component: {fileID: 566776126}
+  - component: {fileID: 566776128}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -378,6 +377,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &566776128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566776125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11066ff95bbf3344b868394742f7002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHRTF: 0
+  hrtfNames: []
 --- !u!4 &873528035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1904653213091408555, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
@@ -654,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: triggerMessage
       value: YOU DIED
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929974398524426476, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
+      propertyPath: Spatialize
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3929974398524426476, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: m_audioClip
