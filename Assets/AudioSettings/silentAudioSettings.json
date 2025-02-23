@@ -1,0 +1,27 @@
+{
+  "sounds": [
+    {
+      "soundName": "ForwardBackward",
+      "description": "Walk Forward",
+      "mute": true,
+      "spatialize": false,
+      "spatializePostEffect": false,
+      "bypassEffects": false,
+      "bypassListenerEffects": false,
+      "bypassReverbZones": false,
+      "playOnAwake": false,
+      "loop": true,
+      "priority": 128,
+      "volume": 0.15,
+      "pitch": 1.0,
+      "stereoPan": 0.0,
+      "spatialBlend": 0,
+      "reverbZoneMix": 1.0,
+      "dopplerLevel": 1.0,
+      "spread": 0.0,
+      "minDistance": 1.0,
+      "maxDistance": 500.0,
+      "rolloffMode": "Logarithmic"
+    }
+  ]
+}

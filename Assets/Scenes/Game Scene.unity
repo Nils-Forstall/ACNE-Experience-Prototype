@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &117470077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1904653213091408544, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
+  m_PrefabInstance: {fileID: 1330302340}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &136205073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -330,7 +335,6 @@ GameObject:
   m_Component:
   - component: {fileID: 566776127}
   - component: {fileID: 566776126}
-  - component: {fileID: 566776128}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -350,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0931316377e804e11947baf5a531dc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundSettingsFile: {fileID: 4900000, guid: 8b0d6f4e5b40842fba1d89642e61c61e, type: 3}
+  soundSettingsFile: {fileID: 4900000, guid: 8092e3a359d7e4f7baf33b23cd1f6cd2, type: 3}
   audioClips:
   - {fileID: 8300000, guid: 4bbc0c57f92c348918df16dc294e7b4b, type: 3}
   - {fileID: 8300000, guid: e5fca72665eac40f7aedfd3109724ec4, type: 3}
@@ -377,20 +381,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &566776128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566776125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b11066ff95bbf3344b868394742f7002, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHRTF: 0
-  hrtfNames: []
 --- !u!4 &873528035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1904653213091408555, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
@@ -675,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 3929974398524426476, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: a1768a202a9b1486280a177fdfd0aba5, type: 3}
+      objectReference: {fileID: 8300000, guid: e5fca72665eac40f7aedfd3109724ec4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
 --- !u!4 &1330302348 stripped
@@ -688,12 +678,94 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
   m_PrefabInstance: {fileID: 1330302340}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 117470077}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4097450c4323c4726bd18f5b6abacfcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1347890593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117470077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c3684b22f00604a97bb68037fcf4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directBinaural: 1
+  interpolation: 0
+  perspectiveCorrection: 0
+  distanceAttenuation: 1
+  distanceAttenuationInput: 0
+  distanceAttenuationValue: 1
+  airAbsorption: 0
+  airAbsorptionInput: 0
+  airAbsorptionLow: 1
+  airAbsorptionMid: 1
+  airAbsorptionHigh: 1
+  directivity: 0
+  directivityInput: 0
+  dipoleWeight: 0
+  dipolePower: 0
+  directivityValue: 1
+  occlusion: 1
+  occlusionInput: 0
+  occlusionType: 0
+  occlusionRadius: 1
+  occlusionSamples: 16
+  occlusionValue: 1
+  transmission: 1
+  transmissionType: 1
+  transmissionInput: 1
+  transmissionLow: 0.739
+  transmissionMid: 0.262
+  transmissionHigh: 0.037
+  maxTransmissionSurfaces: 1
+  directMixLevel: 1
+  reflections: 1
+  reflectionsType: 0
+  useDistanceCurveForReflections: 1
+  currentBakedSource: {fileID: 0}
+  reverbTimeLow: 0
+  reverbTimeMid: 0
+  reverbTimeHigh: 0
+  hybridReverbEQLow: 1
+  hybridReverbEQMid: 1
+  hybridReverbEQHigh: 1
+  hybridReverbDelay: 0
+  applyHRTFToReflections: 1
+  reflectionsMixLevel: 1
+  pathing: 0
+  pathingProbeBatch: {fileID: 0}
+  pathValidation: 1
+  findAlternatePaths: 1
+  pathingEQ:
+  - 1
+  - 1
+  - 1
+  pathingSH:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  applyHRTFToPathing: 0
+  pathingMixLevel: 1
 --- !u!1 &1485676655
 GameObject:
   m_ObjectHideFlags: 0
