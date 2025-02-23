@@ -187,6 +187,12 @@ public class Game : MonoBehaviour
 		int2 playerCoords = maze.WorldPositionToCoordinates(playerPosition);
 		float closestDistance = float.MaxValue;
 		int2 closestCell = playerCoords;
+
+		// AudioManager.Instance.PlaySound("You Died");
+		// Debug.Log("playing guidance sound");
+		AudioManager.Instance.PlayGuidanceSounds(maze, playerCoords, player.transform);
+
+
 		int nextStepIndex = 0;
 
 		// **Find the next best cell on the solution path (avoiding walls)**
@@ -252,7 +258,7 @@ public class Game : MonoBehaviour
 		}
 
 		// Display guidance message
-		Debug.Log(guidanceMessage);
+		// Debug.Log(guidanceMessage);
 
 		// **Check if the player has reached the goal**
 		int2 goalPosition = solutionPath[solutionPath.Count - 1];

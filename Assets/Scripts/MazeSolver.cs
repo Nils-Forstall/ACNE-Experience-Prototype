@@ -81,4 +81,27 @@ public struct MazeSolver
         path.Reverse();
         return path;
     }
+
+        public List<string> GetPossibleDirections(int currentIndex)
+    {
+        var directions = new List<string>();
+    
+        if (CanMove(currentIndex, maze.StepN)) directions.Add("North");
+        if (CanMove(currentIndex, maze.StepE)) directions.Add("East");
+        if (CanMove(currentIndex, maze.StepS)) directions.Add("South");
+        if (CanMove(currentIndex, maze.StepW)) directions.Add("West");
+    
+        return directions;
+    }
+    
+    private bool CanMove(int current, int step)
+    {
+        int neighbor = current + step;
+        if (neighbor >= 0 && neighbor < maze.Length && cameFrom[neighbor] == -1)
+        {
+            // Ensure there is a passage (not a wall)
+            return (maze[current] & maze[neighbor]) != 0;
+        }
+        return false;
+    }
 }

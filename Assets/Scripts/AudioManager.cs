@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+
 
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager _instance;
     public TextAsset soundSettingsFile;
-
-
+    private float lastGuidanceSoundTime;
     private const string DEFAULT_JSON = @"
 {
     ""sounds"": [
@@ -595,15 +596,179 @@ public void LoadSoundSettings()
         }
     }
 
+    public void PlayGuidanceSounds(Maze maze, int2 playerCoords, Transform playerTransform)
+    {
+        // Check if enough time has passed since the last guidance sound
+        if (Time.time - lastGuidanceSoundTime < 1f)
+        {
+            // Debug.Log("Not enough time has passed since the last guidance sound.");
+            return; // Not enough time has passed, do nothing
+        }
 
+        // Update the last guidance sound time
+        lastGuidanceSoundTime = Time.time;
+
+        // Determine the player's facing direction
+        Vector3 forward = playerTransform.forward;
+
+        // Determine the cardinal direction the player is facing
+        string cardinalDirection = GetCardinalDirection(forward);
+
+        // Calculate the left and right cells based on the cardinal direction
+        int2 leftCell = playerCoords;
+        int2 rightCell = playerCoords;
+
+        switch (cardinalDirection)
+        {
+            case "North":
+                leftCell += new int2(-1, 0); // West
+                rightCell += new int2(1, 0); // East
+                break;
+            case "South":
+                leftCell += new int2(1, 0); // East
+                rightCell += new int2(-1, 0); // West
+                break;
+            case "East":
+                leftCell += new int2(0, 1); // North
+                rightCell += new int2(0, -1); // South
+                break;
+            case "West":
+                leftCell += new int2(0, -1); // South
+                rightCell += new int2(0, 1); // North
+                break;
+        }
+
+        Debug.Log($"Player Coords: {playerCoords}, Left Cell: {leftCell}, Right Cell: {rightCell}");
+        Debug.Log($"Player Forward: {forward}, Cardinal Direction: {cardinalDirection}");
+
+        if (!maze.WallBetweenCells(playerCoords, leftCell))
+        {
+            PlaySound("Whoosh Left");
+            Debug.Log("Playing sound: Whoosh Left");
+        }
+        else
+        {
+            Debug.Log("Wall detected to the left.");
+        }
+
+        if (!maze.WallBetweenCells(playerCoords, rightCell))
+        {
+            PlaySound("Whoosh Right");
+            Debug.Log("Playing sound: Whoosh Right");
+        }
+        else
+        {
+            Debug.Log("Wall detected to the right.");
+        }
+    }
+
+    private string GetCardinalDirection(Vector3 forward)
+    {
+        Vector3[] directions = new Vector3[]
+        {
+            new Vector3(0, 0, 1), // North
+            new Vector3(1, 0, 0), // East
+            new Vector3(0, 0, -1), // South
+            new Vector3(-1, 0, 0), // West
+            new Vector3(0.7071f, 0, 0.7071f), // Northeast
+            new Vector3(0.7071f, 0, -0.7071f), // Southeast
+            new Vector3(-0.7071f, 0, -0.7071f), // Southwest
+            new Vector3(-0.7071f, 0, 0.7071f) // Northwest
+        };
+
+        string[] directionNames = new string[]
+        {
+            "North",
+            "East",
+            "South",
+            "West",
+            "Northeast",
+            "Southeast",
+            "Southwest",
+            "Northwest"
+        };
+
+        float maxDot = -1f;
+        int bestMatch = -1;
+
+        for (int i = 0; i < directions.Length; i++)
+        {
+            float dot = Vector3.Dot(forward.normalized, directions[i]);
+            if (dot > maxDot)
+            {
+                maxDot = dot;
+                bestMatch = i;
+            }
+        }
+
+        return directionNames[bestMatch];
+    }
+
+    // public void PlayGuidanceSounds(Maze maze, int2 playerCoords, Transform playerTransform)
+    // {
+    //     // Check if enough time has passed since the last guidance sound
+    //     if (Time.time - lastGuidanceSoundTime < 1f)
+    //     {
+    //         // Debug.Log("Not enough time has passed since the last guidance sound.");
+    //         return; // Not enough time has passed, do nothing
+    //     }
+
+    //     // Update the last guidance sound time
+    //     lastGuidanceSoundTime = Time.time;
+
+    //     // Determine the player's facing direction
+    //     Vector3 forward = playerTransform.forward;
+    //     Vector3 right = playerTransform.right;
+
+    //     // Calculate the left and right cells based on the player's facing direction
+    //     int2 rightCell = playerCoords + GetDirectionVector(-right);
+    //     int2 leftCell = playerCoords + GetDirectionVector(right);
+
+
+    //     Debug.Log($"Player Coords: {playerCoords}, Left Cell: {leftCell}, Right Cell: {rightCell}");
+    //     Debug.Log($"Player Forward: {forward}, Player Right: {right}");
+
+    //     if (!maze.WallBetweenCells(playerCoords, leftCell))
+    //     {
+    //         PlaySound("Whoosh Left");
+    //         Debug.Log("Playing sound: Whoosh Left");
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Wall detected to the left.");
+    //     }
+
+    //     if (!maze.WallBetweenCells(playerCoords, rightCell))
+    //     {
+    //         PlaySound("Whoosh Right");
+    //         Debug.Log("Playing sound: Whoosh Right");
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Wall detected to the right.");
+    //     }
+    // }
+
+    // private int2 GetDirectionVector(Vector3 direction)
+    // {
+    //     // Determine the closest grid direction
+    //     if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+    //     {
+    //         return new int2(Mathf.RoundToInt(direction.x), 0);
+    //     }
+    //     else
+    //     {
+    //         return new int2(0, Mathf.RoundToInt(direction.z));
+    //     }
+    // }
 
     public void StopAllSounds()
-{
-    foreach (var source in _audioSources.Values)
     {
-        source.Stop();
+        foreach (var source in _audioSources.Values)
+        {
+            source.Stop();
+        }
     }
-}
 
 
     /// <summary>

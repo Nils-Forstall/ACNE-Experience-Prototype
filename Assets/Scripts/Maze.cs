@@ -78,6 +78,36 @@ public struct Maze
 		return index < 0 || index >= cells.Length || cells[index] == 0;
 	}
 
+	public bool WallBetweenCells(int2 a, int2 b)
+	{
+		int2 delta = b - a;
+
+		// Check if the cells are adjacent
+		if (abs(delta.x) + abs(delta.y) != 1)
+			return true; // Non-adjacent cells are separated by a wall
+
+		// Check if the cells are out of bounds
+		if (a.x < 0 || a.x >= size.x || a.y < 0 || a.y >= size.y)
+			return true; // Out-of-bounds is a wall
+		if (b.x < 0 || b.x >= size.x || b.y < 0 || b.y >= size.y)
+			return true; // Out-of-bounds is a wall
+
+		// Check if there is a wall between the cells
+    	int indexA = CoordinatesToIndex(a);
+    	int indexB = CoordinatesToIndex(b);
+
+    	if (delta.x == 1) // b is to the east of a
+			return (cells[indexA] & MazeFlags.PassageE) == 0 || (cells[indexB] & MazeFlags.PassageW) == 0;
+		if (delta.x == -1) // b is to the west of a
+			return (cells[indexA] & MazeFlags.PassageW) == 0 || (cells[indexB] & MazeFlags.PassageE) == 0;
+		if (delta.y == 1) // b is to the north of a
+			return (cells[indexA] & MazeFlags.PassageN) == 0 || (cells[indexB] & MazeFlags.PassageS) == 0;
+		if (delta.y == -1) // b is to the south of a
+			return (cells[indexA] & MazeFlags.PassageS) == 0 || (cells[indexB] & MazeFlags.PassageN) == 0;
+
+		return true; // Default to true if something unexpected happens
+	}
+
 
 
 

@@ -64,44 +64,44 @@ public class Player : MonoBehaviour
     }
 
     void UpdateEyeAngles()
-{
-
-    // Use serial camera speed if available, otherwise fallback to keyboard input
-    float horizontalInput = serialAvailable ? cameraSpeed * CameraScalingFactor * rotationSpeed : Input.GetAxis("Horizontal") * rotationSpeed;
-
-    eyeAngles.x += horizontalInput;
-    eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
-    transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
-
-    // Determine turning direction based on input
-    if (horizontalInput > 0) // Turning Right
     {
-        if (!isTurningRight)
+
+        // Use serial camera speed if available, otherwise fallback to keyboard input
+        float horizontalInput = serialAvailable ? cameraSpeed * CameraScalingFactor * rotationSpeed : Input.GetAxis("Horizontal") * rotationSpeed;
+
+        eyeAngles.x += horizontalInput;
+        // eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
+        transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
+
+        // Determine turning direction based on input
+        if (horizontalInput > 0) // Turning Right
         {
-            isTurningRight = true;
-            isTurningLeft = false;
-            TurnRight();
+            if (!isTurningRight)
+            {
+                isTurningRight = true;
+                isTurningLeft = false;
+                TurnRight();
+            }
+        }
+        else if (horizontalInput < 0) // Turning Left
+        {
+            if (!isTurningLeft)
+            {
+                isTurningLeft = true;
+                isTurningRight = false;
+                TurnLeft();
+            }
+        }
+        else // No input, stop the sound
+        {
+            if (isTurningLeft || isTurningRight)
+            {
+                isTurningLeft = false;
+                isTurningRight = false;
+                StopTurnAudio();
+            }
         }
     }
-    else if (horizontalInput < 0) // Turning Left
-    {
-        if (!isTurningLeft)
-        {
-            isTurningLeft = true;
-            isTurningRight = false;
-            TurnLeft();
-        }
-    }
-    else // No input, stop the sound
-    {
-        if (isTurningLeft || isTurningRight)
-        {
-            isTurningLeft = false;
-            isTurningRight = false;
-            StopTurnAudio();
-        }
-    }
-}
 
     void UpdatePosition()
     {
@@ -253,7 +253,7 @@ private void DetectCameraCollision()
     Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
     RaycastHit hit;
 
-    Debug.Log($"Checking for collision");
+    // Debug.Log($"Checking for collision");
     if (Physics.Raycast(ray, out hit, detectionRange))
     {
         if (!isColliding) // Only play collision sound once per collision event
