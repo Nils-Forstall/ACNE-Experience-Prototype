@@ -130,7 +130,7 @@
       "volume": 150,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 20.0,
@@ -138,7 +138,7 @@
       "maxDistance": 500.0,
       "rolloffMode": "Linear"
     },
-{
+    {
       "soundName": "Collision2",
       "description": "Collide With Wall (rated 4)",
       "mute": false,
@@ -153,7 +153,7 @@
       "volume": 100,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 20.0,
@@ -161,7 +161,7 @@
       "maxDistance": 500.0,
       "rolloffMode": "Linear"
     },
-{
+    {
       "soundName": "Collision3",
       "description": "Collide With Wall (rated 4)",
       "mute": false,
@@ -176,7 +176,7 @@
       "volume": 100,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 20.0,
@@ -184,7 +184,7 @@
       "maxDistance": 500.0,
       "rolloffMode": "Linear"
     },
-{
+    {
       "soundName": "Game Begin",
       "description": "Death (rated 3)",
       "mute": false,
@@ -199,7 +199,7 @@
       "volume": 1.0,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 0.0,
@@ -223,7 +223,7 @@
       "volume": 1.0,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 0.0,
@@ -232,7 +232,7 @@
       "rolloffMode": "Logarithmic"
     },
 
-{
+    {
       "soundName": "Death Sound",
       "description": "Death (rated 3)",
       "mute": false,
@@ -247,7 +247,7 @@
       "volume": 1.0,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 0.0,
@@ -316,7 +316,7 @@
       "volume": 1.0,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 0.0,

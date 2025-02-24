@@ -74,28 +74,28 @@ public class Agent : MonoBehaviour
 
 
 	void playNear(){
-		if (!nearPlaying){
-			AudioManager.Instance.PlaySoundOn(gameObject, "Blue Box v2");
-			nearPlaying = true;
-		}
+		// if (!nearPlaying){
+		// 	AudioManager.Instance.PlaySoundOn(gameObject, "Blue Box v2");
+		// 	nearPlaying = true;
+		// }
 	}
 
 	void stopNear(){
-		AudioManager.Instance.StopSound("Blue Box v2");
-		nearPlaying = false;
+		// AudioManager.Instance.StopSound("Blue Box v2");
+		// nearPlaying = false;
 	}
 
 
 	void playAlarm(){
-		if (!alarmPlaying) {
-			AudioManager.Instance.PlaySoundOn(gameObject, "Alarm");
-			alarmPlaying = true;
-		}
+		// if (!alarmPlaying) {
+		// 	AudioManager.Instance.PlaySoundOn(gameObject, "Alarm");
+		// 	alarmPlaying = true;
+		// }
 	}
 
 	void stopAlarm(){
-		AudioManager.Instance.StopSound("Alarm");
-		alarmPlaying = false;
+		// AudioManager.Instance.StopSound("Alarm");
+		// alarmPlaying = false;
 	}
 
 
