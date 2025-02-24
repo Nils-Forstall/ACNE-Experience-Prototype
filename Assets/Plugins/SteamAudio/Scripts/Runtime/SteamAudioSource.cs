@@ -207,6 +207,7 @@ namespace SteamAudio
             if (mAudioEngineSource != null)
             {
                 mAudioEngineSource.UpdateParameters(this);
+
             }
         }
 
@@ -252,8 +253,10 @@ namespace SteamAudio
 
         private void Update()
         {
-            if (mAudioEngineSource != null)
-            {
+            if (mAudioEngineSource != null) {
+            if (occlusionValue > 0.0f) {
+                Debug.Log(gameObject.name + " " + "occlusionValue" + " " + occlusionValue);
+            }
                 mAudioEngineSource.UpdateParameters(this);
             }
         }
@@ -382,6 +385,7 @@ namespace SteamAudio
         {
             return mSource;
         }
+
 
         public void UpdateOutputs(SimulationFlags flags)
         {

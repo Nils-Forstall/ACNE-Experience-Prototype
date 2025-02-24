@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField, Min(0f)]
     public float movementSpeed = .25f, rotationSpeed = 0.25f;
 
+    [SerializeField]
+    public string collisionAudio = "Collision1";
+
     float detectionRange = 0.5f;
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
@@ -261,7 +264,7 @@ private void DetectCameraCollision()
             
             Debug.Log($"Collision: Player collided with {hit.collider.gameObject.name} (Obstacle)");
             AudioManager.Instance.StopSound("ForwardBackward");
-            AudioManager.Instance.PlaySound("Collision");
+            AudioManager.Instance.PlaySound(collisionAudio);
             isColliding = true;
         }
     }
@@ -270,7 +273,7 @@ private void DetectCameraCollision()
         // If no collision detected, resume movement sound
         if (isColliding)
         {
-            AudioManager.Instance.StopSound("Collision");
+            AudioManager.Instance.StopSound(collisionAudio);
             AudioManager.Instance.PlaySound("ForwardBackward");
             isColliding = false;
         }
