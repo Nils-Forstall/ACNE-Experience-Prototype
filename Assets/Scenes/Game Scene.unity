@@ -296,7 +296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: Priority
-      value: 80
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_Volume
@@ -478,6 +478,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
   m_PrefabInstance: {fileID: 465673886}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &602188774
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2084950773}
+    m_Modifications:
+    - target: {fileID: 271469352466465415, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_Name
+      value: Front Guide Audio
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537617630125685996, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_Name
+      value: Front Guide
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: Pan2D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: Priority
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e0cd71016ae2b4d3a94e37347b25b79f, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+--- !u!4 &602188775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5420559983529864186, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
+  m_PrefabInstance: {fileID: 602188774}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &656226274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -543,7 +625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: Priority
-      value: 80
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_Volume
@@ -1315,6 +1397,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 669358638}
   - {fileID: 572283668}
+  - {fileID: 602188775}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
