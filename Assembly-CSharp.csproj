@@ -70,6 +70,7 @@
     <Compile Include="Assets/Scripts/Scent.cs" />
     <Compile Include="Assets/Scripts/MazeCellObject.cs" />
     <Compile Include="Assets/Scripts/Game.cs" />
+    <Compile Include="Assets/Scripts/MuteWhenNotPlaying.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />

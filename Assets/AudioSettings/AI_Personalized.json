@@ -15,7 +15,7 @@
       "volume": 100,
       "pitch": 1.0,
       "stereoPan": 0.0,
-      "spatialBlend": 1.0,
+      "spatialBlend": 0,
       "reverbZoneMix": 1.0,
       "dopplerLevel": 1.0,
       "spread": 30.0,
