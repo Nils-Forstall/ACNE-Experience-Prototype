@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public string deadEndAudio = "Warning1";
 
-    float detectionRange = 0.25f;
+    float detectionRange = 0.5f;
 
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
@@ -298,10 +298,9 @@ private void DetectCameraCollision()
         if (!isColliding) // Only play collision sound once per collision event
         {
             Debug.Log($"Collision: Player collided with {hit.collider.gameObject.name} (Obstacle)");
-            if (isMovingBackward) return; // Don't play collision sound if player is moving backward
             AudioManager.Instance.StopSound("ForwardBackward");
             AudioManager.Instance.PlaySound(collisionAudio);
-            if (!isSendingData1)
+            if (!isSendingData1 && !isMovingBackward)
             {
                 isSendingData1 = true;
                 SendSerialData1();
