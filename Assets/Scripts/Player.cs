@@ -10,7 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     public string collisionAudio = "Collision1";
 
+    [SerializeField]
+    public string deadEndAudio = "Warning1";
+
     float detectionRange = 0.5f;
+    [SerializeField]
+
+    float deadEndRange = 1f;
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
 
@@ -241,10 +247,47 @@ void StopTurnAudio() {
 
     private void Update() {
         DetectCameraCollision();
+        deadEndDetection();
         UpdateEyeAngles();
         UpdatePosition();
     }
 
+
+private void deadEndDetection() {
+    Camera playerCamera = Camera.main;
+    if (playerCamera == null) return;
+
+    Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+    RaycastHit hit;
+    RaycastHit leftHit;
+    RaycastHit rightHit;
+
+    var leftRay = new Ray(transform.position, -transform.right);
+    var rightRay = new Ray(transform.position, transform.right);
+
+    if (Physics.Raycast(leftRay, out leftHit, deadEndRange) && leftHit.collider.gameObject.name.StartsWith("Wall")
+        && Physics.Raycast(rightRay, out rightHit, deadEndRange) && rightHit.collider.gameObject.name.StartsWith("Wall"))
+    {
+        var forwardRay = new Ray(transform.position, transform.forward);
+        if (!isColliding && Physics.Raycast(forwardRay, out hit, deadEndRange))
+        {
+            var leftWallRay = new Ray(leftHit.point, -hit.normal);
+            var rightWallRay = new Ray(rightHit.point, hit.normal);
+
+            RaycastHit leftWallHit;
+            RaycastHit rightWallHit;
+
+            if (Physics.Raycast(leftWallRay, out leftWallHit, 0.1f)
+                && leftWallHit.collider.gameObject.name.StartsWith("Wall")
+                && Physics.Raycast(rightWallRay, out rightWallHit, 0.1f)
+                && rightWallHit.collider.gameObject.name.StartsWith("Wall"))
+            {
+                Debug.Log($"Collision: Player detects a dead end with {hit.collider.gameObject.name} (Obstacle)");
+                AudioManager.Instance.PlaySound(deadEndAudio);
+            }
+        }
+    }
+}
 
 private void DetectCameraCollision()
 {
@@ -256,7 +299,6 @@ private void DetectCameraCollision()
     Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
     RaycastHit hit;
 
-    Debug.Log($"Checking for collision");
     if (Physics.Raycast(ray, out hit, detectionRange))
     {
         if (!isColliding) // Only play collision sound once per collision event
