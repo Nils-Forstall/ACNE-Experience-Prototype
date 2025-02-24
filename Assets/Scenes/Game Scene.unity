@@ -1514,15 +1514,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a9b7a13cd754c04b32547c1bfc9cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.35
-  rotationSpeed: 0.25
+  movementSpeed: 30
+  rotationSpeed: 5
   collisionAudio: Collision3
   deadEndAudio: Warning1
   deadEndRange: 3
   startingVerticalEyeAngle: 10
   MovementScalingFactor: 0.001
   CameraScalingFactor: 0.001
-  portName: /dev/tty.usbserial-1140
+  portName1: /dev/tty.usbserial-AQ02O6OD
+  portName2: /dev/tty.usbserial-AQ02OE6D
   baudRate: 115200
 --- !u!23 &1436922957260777175
 MeshRenderer:
