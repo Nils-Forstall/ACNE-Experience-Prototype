@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
     float horizontalInput = serialAvailable ? cameraSpeed * CameraScalingFactor * rotationSpeed : Input.GetAxis("Horizontal") * rotationSpeed;
 
     eyeAngles.x += horizontalInput;
-    eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
+    // eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
     transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
 
     // Determine turning direction based on input
