@@ -3,7 +3,6 @@ using UnityEngine;
 public class MuteWhenNotPlaying : MonoBehaviour
 {
     private AudioSource audioSource;
-    public bool isPlayerDead = false;  // Example flag for player state
     
 
     void Start()
