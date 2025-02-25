@@ -361,8 +361,7 @@ MonoBehaviour:
   openDeadEndProbability: 1
   openArbitraryProbability: 0.5
   player: {fileID: 2084950778}
-  agents:
-  - {fileID: 1330302358}
+  agents: []
   displayText: {fileID: 7270601477899884428}
   guidanceText: {fileID: 7270601477899884428}
 --- !u!4 &469549574
@@ -941,17 +940,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1904653213091408555, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
   m_PrefabInstance: {fileID: 1330302340}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1330302358 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
-  m_PrefabInstance: {fileID: 1330302340}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 809422238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4097450c4323c4726bd18f5b6abacfcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1330302359
 MonoBehaviour:
   m_ObjectHideFlags: 0
