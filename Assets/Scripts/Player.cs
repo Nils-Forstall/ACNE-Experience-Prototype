@@ -351,7 +351,7 @@ private void DetectCameraCollision()
 
         void SendSerialData1()
     {
-            float data1 = -1.0f;
+            float data1 = -0.25f;
             serialPort1.WriteLine(data1.ToString());
             Debug.Log("Sent data on Serial Port1: " + data1);
     }
