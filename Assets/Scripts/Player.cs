@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.IO.Ports;
 using System.Threading;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using AccessibilityPrototype;
 
 public class Player : MonoBehaviour
 {
@@ -18,7 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
 
-   private bool isColliding = false; // Tracks collision state
+    private Maze maze;
+
+    private bool isColliding = false; // Tracks collision state
 
     [SerializeField]
     public float MovementScalingFactor = 1f;
@@ -30,9 +35,7 @@ public class Player : MonoBehaviour
     private Transform eye;
     private Vector2 eyeAngles;
 
-
     [SerializeField]     // for controller
-
     public string portName1 = "/dev/tty.usbserial-AQ02O6OD";  // For moveSpeed
     public string portName2 = "/dev/tty.usbserial-AQ02OE6D"; 
     public int baudRate = 115200;
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
 
     private bool isTurningLeft;
     private bool isTurningRight;
+    
 
     // private readonly object dataLock = new object();
 
@@ -65,9 +69,14 @@ public class Player : MonoBehaviour
         TryOpenSerialPort();
     }
 
+    public void SetMaze(Maze maze)
+    {
+        this.maze = maze;
+    }
+
     public void StartNewGame(Vector3 position)
     {
-        eyeAngles.x = Random.Range(0f, 360f);
+        eyeAngles.x = UnityEngine.Random.Range(0f, 360f);
         eyeAngles.y = startingVerticalEyeAngle;
         characterController.enabled = false;
         transform.localPosition = position;
@@ -75,44 +84,43 @@ public class Player : MonoBehaviour
     }
 
     void UpdateEyeAngles()
-{
-
-    // Use serial camera speed if available, otherwise fallback to keyboard input
-    float horizontalInput = serialAvailable ? cameraSpeed * CameraScalingFactor * rotationSpeed : Input.GetAxis("Horizontal") * rotationSpeed;
-
-    eyeAngles.x += horizontalInput;
-    // eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
-    transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
-
-    // Determine turning direction based on input
-    if (horizontalInput > 0) // Turning Right
     {
-        if (!isTurningRight)
+        // Use serial camera speed if available, otherwise fallback to keyboard input
+        float horizontalInput = serialAvailable ? cameraSpeed * CameraScalingFactor * rotationSpeed : Input.GetAxis("Horizontal") * rotationSpeed;
+
+        eyeAngles.x += horizontalInput;
+        // eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
+        transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
+
+        // Determine turning direction based on input
+        if (horizontalInput > 0) // Turning Right
         {
-            isTurningRight = true;
-            isTurningLeft = false;
-            TurnRight();
+            if (!isTurningRight)
+            {
+                isTurningRight = true;
+                isTurningLeft = false;
+                TurnRight();
+            }
+        }
+        else if (horizontalInput < 0) // Turning Left
+        {
+            if (!isTurningLeft)
+            {
+                isTurningLeft = true;
+                isTurningRight = false;
+                TurnLeft();
+            }
+        }
+        else // No input, stop the sound
+        {
+            if (isTurningLeft || isTurningRight)
+            {
+                isTurningLeft = false;
+                isTurningRight = false;
+                StopTurnAudio();
+            }
         }
     }
-    else if (horizontalInput < 0) // Turning Left
-    {
-        if (!isTurningLeft)
-        {
-            isTurningLeft = true;
-            isTurningRight = false;
-            TurnLeft();
-        }
-    }
-    else // No input, stop the sound
-    {
-        if (isTurningLeft || isTurningRight)
-        {
-            isTurningLeft = false;
-            isTurningRight = false;
-            StopTurnAudio();
-        }
-    }
-}
 
     void UpdatePosition()
     {
@@ -159,7 +167,7 @@ public class Player : MonoBehaviour
         AudioManager.Instance.PlaySound("ForwardBackward");
     }
 
-      void TurnRight() {
+    void TurnRight() {
         AudioManager.Instance.PlaySound("Tank Movement");
     }
 
@@ -167,18 +175,17 @@ public class Player : MonoBehaviour
         AudioManager.Instance.PlaySound("Tank Movement");
     }
 
-
-void StopTurnAudio() {
-    AudioManager.Instance.StopSound("Tank Movement");
-                isTurningLeft = false;
+    void StopTurnAudio() {
+        AudioManager.Instance.StopSound("Tank Movement");
+        isTurningLeft = false;
         isTurningRight = false;
-}
+    }
+
     void StopAudio()
     {
         AudioManager.Instance.StopSound("ForwardBackward");
         isMovingForward = false;
         isMovingBackward = false;
-
     }
 
     // Serial Communication Setup
@@ -208,15 +215,14 @@ void StopTurnAudio() {
             serialThread2.IsBackground = true;
             serialThread2.Start();
             Debug.Log("Opening port2");
-            
         }
         catch (System.Exception e)
         {
             Debug.LogWarning("Could not open serial port2: " + e.Message);
             serialAvailable = false;
         }
-
     }
+
     void ReadSerialData1()
     {
         while (isRunning)
@@ -244,6 +250,7 @@ void StopTurnAudio() {
             }
         }
     }
+
     // Reads raw serial data for cameraSpeed.
     void ReadSerialData2()
     {
@@ -255,7 +262,6 @@ void StopTurnAudio() {
             {
                 if (serialPort2.BytesToRead > 0)
                 {
-                    
                     string dataLine = serialPort2.ReadLine();
                     Debug.Log("dataLine from port2" + dataLine);
                     if (string.IsNullOrEmpty(dataLine))
@@ -280,52 +286,102 @@ void StopTurnAudio() {
         UpdatePosition();
     }
 
-
-private void DetectCameraCollision()
-{
-    // Find the main camera
-    Camera playerCamera = Camera.main;
-    if (playerCamera == null) return;
-
-    bool isSendingData1 = false;
-    // Cast a ray from the camera's position in the forward direction
-    Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-    RaycastHit hit;
-    
-
-    if (Physics.Raycast(ray, out hit, detectionRange))
+    private void DetectCameraCollision()
     {
-        if (!isColliding) // Only play collision sound once per collision event
+        // Find the main camera
+        Camera playerCamera = Camera.main;
+        if (playerCamera == null) return;
+
+        bool isSendingData1 = false;
+        // Cast a ray from the camera's position in the forward direction
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, detectionRange))
         {
-            Debug.Log($"Collision: Player collided with {hit.collider.gameObject.name} (Obstacle)");
-            AudioManager.Instance.StopSound("ForwardBackward");
-            AudioManager.Instance.PlaySound(collisionAudio);
-            if (!isSendingData1 && !isMovingBackward)
+            if (!isColliding) // Only play collision sound once per collision event
             {
-                isSendingData1 = true;
-                SendSerialData1();
+                Debug.Log($"Collision: Player collided with {hit.collider.gameObject.name} (Obstacle)");
+                AudioManager.Instance.StopSound("ForwardBackward");
+                AudioManager.Instance.PlaySound(collisionAudio);
+                if (!isSendingData1 && !isMovingBackward)
+                {
+                    isSendingData1 = true;
+                    try
+                    {
+                        SendSerialData1();
+                    }
+                    catch (System.Exception e)
+                    {
+                        // Debug.LogWarning("Could not send data on serial port1: " + e.Message);
+                    }
+                }
+                isColliding = true;
             }
-            isColliding = true;
         }
-    }
-    else
-    {
-        // If no collision detected, resume movement sound
-        if (isColliding)
+        else
         {
-            isSendingData1 = false;
-            AudioManager.Instance.StopSound(collisionAudio);
-            AudioManager.Instance.PlaySound("ForwardBackward");
-            isColliding = false;
+            // If no collision detected, resume movement sound
+            if (isColliding)
+            {
+                isSendingData1 = false;
+                AudioManager.Instance.StopSound(collisionAudio);
+                AudioManager.Instance.PlaySound("ForwardBackward");
+                isColliding = false;
+            }
         }
     }
-}
 
+    // This function returns the vector3 of the cells that are open next to the player
+    // If there is a wall, it will not return that cell
+    public List<(Vector3, RelativeDirection)> GetOpenSpaces() {
+        List<(Vector3, RelativeDirection)> openSpaces = new List<(Vector3, RelativeDirection)>();
+        Vector3 playerPosition = transform.localPosition;
+        int2 playerCoords = maze.WorldPositionToCoordinates(playerPosition);
+        CardinalDirection directionFacing = getDirectionFacing();
+        CardinalDirection directionLeft = (CardinalDirection)(((int)directionFacing + 3) % 4);
+        CardinalDirection directionRight = (CardinalDirection)(((int)directionFacing + 1) % 4);
+
+        // check the direction to the left
+        if (maze.isDirectionOpen(playerCoords, directionLeft)) {
+            Debug.Log("Left is open");
+        }
+        if (maze.isDirectionOpen(playerCoords, directionRight)) {
+            Debug.Log("Left is open");
+        }
+        if (maze.isDirectionOpen(playerCoords, directionFacing)) {
+            Debug.Log("Left is open");
+        }
+
+        return openSpaces;
+    }
 
     public Vector3 Move()
     {
         return transform.localPosition;
     }
+
+    private CardinalDirection getDirectionFacing()
+    {
+        float angle = transform.eulerAngles.y;
+        if (angle >= 45 && angle < 135)
+        {
+            return CardinalDirection.North;
+        }
+        else if (angle >= 135 && angle < 225)
+        {
+            return CardinalDirection.West;
+        }
+        else if (angle >= 225 && angle < 315)
+        {
+            return CardinalDirection.South;
+        }
+        else
+        {
+            return CardinalDirection.East;
+        }
+    }
+
     void OnDestroy()
     {
         isRunning = false;
@@ -349,16 +405,17 @@ private void DetectCameraCollision()
         }
     }
 
-        void SendSerialData1()
+    void SendSerialData1()
     {
-            float data1 = -0.25f;
-            serialPort1.WriteLine(data1.ToString());
-            Debug.Log("Sent data on Serial Port1: " + data1);
+        float data1 = -0.25f;
+        serialPort1.WriteLine(data1.ToString());
+        Debug.Log("Sent data on Serial Port1: " + data1);
     }
+
     void SendSerialData2()
     {
-            float data2 = 10.0f;
-            serialPort2.WriteLine(data2.ToString());
-            Debug.Log("Sent data on Serial Port2: " + data2);
+        float data2 = 10.0f;
+        serialPort2.WriteLine(data2.ToString());
+        Debug.Log("Sent data on Serial Port2: " + data2);
     }
 }

@@ -121,9 +121,11 @@ public class Game : MonoBehaviour
 
     void StartNewGame()
     {
+        createMaze();
+        player.SetMaze(maze);
         isPlaying = true;
         displayText.gameObject.SetActive(false);
-        createMaze();
+        
         
         MazeSolver solver = new MazeSolver(maze);
         int startIndex = maze.CoordinatesToIndex(new int2(0, 0)); // Start at (0,0)

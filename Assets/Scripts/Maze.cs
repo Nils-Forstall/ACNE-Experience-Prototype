@@ -1,6 +1,7 @@
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using AccessibilityPrototype;
 
 using static Unity.Mathematics.math;
 
@@ -78,7 +79,30 @@ public struct Maze
 		return index < 0 || index >= cells.Length || cells[index] == 0;
 	}
 
-
+	public bool isDirectionOpen(int2 playerCoords, CardinalDirection direction)
+	{
+		// Find the maze flag for the direction
+		// Don't use IsWall() in this method, instead use the maze flags directly
+		int index = CoordinatesToIndex(playerCoords);
+		MazeFlags flags = cells[index];	
+		if (direction == CardinalDirection.North)
+		{
+			return (flags & MazeFlags.PassageN) != 0;
+		}
+		else if (direction == CardinalDirection.East)
+		{
+			return (flags & MazeFlags.PassageE) != 0;
+		}
+		else if (direction == CardinalDirection.South)
+		{
+			return (flags & MazeFlags.PassageS) != 0;
+		}
+		else if (direction == CardinalDirection.West)
+		{
+			return (flags & MazeFlags.PassageW) != 0;
+		}
+		return false;
+	}
 
 
 

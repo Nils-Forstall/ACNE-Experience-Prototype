@@ -1,25 +1,30 @@
 ﻿<Properties StartupConfiguration="{90288115-E49D-EFE1-4D22-F93E4748889D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioDynamicObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SpatialSoundElements.cs">
     <Files>
       <File FileName="Assets/Scripts/AudioManager.cs" Line="101" Column="11" />
       <File FileName="Assets/Scripts/Game.cs" />
       <File FileName="Assets/Scripts/Player.cs" />
       <File FileName="Assets/Scripts/MazeWall.cs" />
-      <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioManager.cs" Line="297" Column="1" />
-      <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/Scene.cs" Line="39" Column="1" />
+      <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioManager.cs" />
+      <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/Scene.cs" />
       <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioDynamicObject.cs" Line="75" Column="1" />
+      <File FileName="Assets/Scripts/SpatialSoundElements.cs" Line="26" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="ACNE-Experience-Prototype" expanded="True" selected="True" />
+          <Node name="ACNE-Experience-Prototype" expanded="True">
+            <Node name="Assets" expanded="True" selected="True">
+              <Node name="Scripts" expanded="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e5c8127c-b3e5-4489-b019-5d2d395feb4d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4b3665c4-7993-41d6-820e-e451b9631982" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/MazeWall.cs" />
     <Compile Include="Assets/Scripts/Jobs/GenerateMazeJob.cs" />
+    <Compile Include="Assets/Scripts/MuteWhenNotPlaying.cs" />
     <Compile Include="Assets/Scripts/AudioManager.cs" />
     <Compile Include="Assets/Scripts/MazeVisualization.cs" />
     <Compile Include="Assets/Scripts/MazeSolver.cs" />
@@ -70,7 +71,8 @@
     <Compile Include="Assets/Scripts/Scent.cs" />
     <Compile Include="Assets/Scripts/MazeCellObject.cs" />
     <Compile Include="Assets/Scripts/Game.cs" />
-    <Compile Include="Assets/Scripts/MuteWhenNotPlaying.cs" />
+    <Compile Include="Assets/Scripts/SpatialSoundElements.cs" />
+    <Compile Include="Assets/Scripts/Direction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
