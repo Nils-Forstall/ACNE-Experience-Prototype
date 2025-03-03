@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
 
     private bool isTurningLeft;
     private bool isTurningRight;
+
+    private float previousAngle;
     
 
     // private readonly object dataLock = new object();
@@ -81,7 +83,9 @@ public class Player : MonoBehaviour
         characterController.enabled = false;
         transform.localPosition = position;
         characterController.enabled = true;
+        previousAngle = eyeAngles.x;
     }
+
 
     void UpdateEyeAngles()
     {
@@ -92,6 +96,20 @@ public class Player : MonoBehaviour
         // eye.localRotation = Quaternion.Euler(eyeAngles.y, eyeAngles.x, 0f);
         transform.rotation = Quaternion.Euler(0f, eyeAngles.x, 0f);
 
+        float delta = Mathf.DeltaAngle(previousAngle, eyeAngles.x);
+        if (Mathf.Abs(delta) >= 90f)
+        {
+            if (delta > 0)
+            {
+                Debug.Log("turned right by 90 degrees");
+            }
+            else
+            {
+                Debug.Log("turned left by 90 degrees");
+            }
+            previousAngle = eyeAngles.x;
+        }
+    
         // Determine turning direction based on input
         if (horizontalInput > 0) // Turning Right
         {
@@ -285,6 +303,8 @@ public class Player : MonoBehaviour
         UpdateEyeAngles();
         UpdatePosition();
     }
+
+
 
     private void DetectCameraCollision()
     {
