@@ -972,8 +972,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2084950778}
-  left: {fileID: 8300000, guid: e0cd71016ae2b4d3a94e37347b25b79f, type: 3}
-  right: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
+  left: {fileID: 8300000, guid: 71d40403961bd4fb18f0409e705d53fa, type: 3}
+  right: {fileID: 8300000, guid: a9b34adff019046ef9e3d1e8373b27a9, type: 3}
   forward: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
 --- !u!4 &1699374630
 Transform:
