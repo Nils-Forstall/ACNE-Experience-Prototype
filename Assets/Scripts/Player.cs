@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public string deadEndAudio = "Warning1";
 
-    float detectionRange = 0.5f;
+    float detectionRange = 0.75f;
 
     [SerializeField]
     float startingVerticalEyeAngle = 10f;
@@ -102,10 +102,13 @@ public class Player : MonoBehaviour
             if (delta > 0)
             {
                 Debug.Log("turned right by 90 degrees");
+                renderRightTurning();
+                
             }
             else
             {
                 Debug.Log("turned left by 90 degrees");
+                renderLeftTurning();
             }
             previousAngle = eyeAngles.x;
         }
@@ -144,7 +147,7 @@ public class Player : MonoBehaviour
     {
         // Use serial movement speed if available, otherwise fallback to keyboard input
         float forwardMovement = serialAvailable ? 
-        moveSpeed * MovementScalingFactor * movementSpeed / 3 : Input.GetAxis("Vertical") * movementSpeed * 3;
+        moveSpeed * MovementScalingFactor * movementSpeed : Input.GetAxis("Vertical") * movementSpeed * 3;
 
         // Debug.Log("dataLine from moveSpeed: " + moveSpeed);
 
@@ -329,7 +332,7 @@ public class Player : MonoBehaviour
                     isSendingData1 = true;
                     try
                     {
-                        SendSerialData1();
+                        renderCollision();
                     }
                     catch (System.Exception e)
                     {
@@ -459,17 +462,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SendSerialData1()
+void renderCollision()
     {
-        float data1 = -0.25f;
-        serialPort1.WriteLine(data1.ToString());
-        Debug.Log("Sent data on Serial Port1: " + data1);
+            float data1 = -0.25f;
+            serialPort1.WriteLine(data1.ToString());
+            Debug.Log("Sent data on Serial Port1: " + data1);
+    }
+    void renderLeftTurning()
+    {
+            float data2 = 20.0f;
+            serialPort2.WriteLine(data2.ToString());
+            Debug.Log("Sent data on Serial Port2: " + data2);
+    }
+    void renderRightTurning()
+    {
+            float data2 = -20.0f;
+            serialPort2.WriteLine(data2.ToString());
+            Debug.Log("Sent data on Serial Port2: " + data2);
     }
 
-    void SendSerialData2()
-    {
-        float data2 = 10.0f;
-        serialPort2.WriteLine(data2.ToString());
-        Debug.Log("Sent data on Serial Port2: " + data2);
-    }
 }
