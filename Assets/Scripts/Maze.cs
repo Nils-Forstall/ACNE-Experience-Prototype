@@ -104,7 +104,22 @@ public struct Maze
 		return false;
 	}
 
-
+	public static int2 DirectionToVector2(CardinalDirection direction)
+	{
+		switch (direction)
+		{
+			case CardinalDirection.North:
+				return int2(0, 1);
+			case CardinalDirection.East:
+				return int2(1, 0);
+			case CardinalDirection.South:
+				return int2(0, -1);
+			case CardinalDirection.West:
+				return int2(-1, 0);
+			default:
+				return int2(0, 0);
+		}
+	}
 
 	public Vector3 IndexToWorldPosition(int index, float y = 0f) =>
 		CoordinatesToWorldPosition(IndexToCoordinates(index), y);

@@ -25,7 +25,7 @@ public class MazeWall : MonoBehaviour
             // Check if the object hit is a wall
             if (hit.collider.gameObject == gameObject)
             {
-                Debug.Log($"Collision: Player collided {gameObject.name} (Wall)");
+                // Debug.Log($"Collision: Player collided {gameObject.name} (Wall)");
                 AudioManager.Instance.StopSound("ForwardBackward");
                 AudioManager.Instance.PlaySound("Collision 2");
             }

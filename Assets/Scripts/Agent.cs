@@ -64,7 +64,7 @@ public class Agent : MonoBehaviour
 			stopAlarm();
 		}
 		if (IsNearPlayer()){
-			Debug.Log("Player near you!");
+			// Debug.Log("Player near you!");
 			playNear();
 		} else {
 			stopNear();

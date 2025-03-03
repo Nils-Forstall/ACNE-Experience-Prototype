@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         float forwardMovement = serialAvailable ? 
         moveSpeed * MovementScalingFactor * movementSpeed / 3 : Input.GetAxis("Vertical") * movementSpeed * 3;
 
-        Debug.Log("dataLine from moveSpeed: " + moveSpeed);
+        // Debug.Log("dataLine from moveSpeed: " + moveSpeed);
 
         Vector3 movement = eye.forward * forwardMovement;
         characterController.Move(movement * Time.deltaTime);
@@ -341,16 +341,22 @@ public class Player : MonoBehaviour
         CardinalDirection directionFacing = getDirectionFacing();
         CardinalDirection directionLeft = (CardinalDirection)(((int)directionFacing + 3) % 4);
         CardinalDirection directionRight = (CardinalDirection)(((int)directionFacing + 1) % 4);
+        Debug.Log("Player is facing " + directionFacing);
+        Debug.Log("left is " + directionLeft);
+        Debug.Log("right is " + directionRight);
 
         // check the direction to the left
         if (maze.isDirectionOpen(playerCoords, directionLeft)) {
             Debug.Log("Left is open");
+            openSpaces.Add((maze.CoordinatesToWorldPosition(playerCoords + Maze.DirectionToVector2(directionLeft)), RelativeDirection.Left));
         }
         if (maze.isDirectionOpen(playerCoords, directionRight)) {
-            Debug.Log("Left is open");
+            Debug.Log("Right is open");
+            openSpaces.Add((maze.CoordinatesToWorldPosition(playerCoords + Maze.DirectionToVector2(directionRight)), RelativeDirection.Right));
         }
         if (maze.isDirectionOpen(playerCoords, directionFacing)) {
-            Debug.Log("Left is open");
+            Debug.Log("Forward is open");
+            openSpaces.Add((maze.CoordinatesToWorldPosition(playerCoords + Maze.DirectionToVector2(directionFacing)), RelativeDirection.Forward));
         }
 
         return openSpaces;
@@ -361,24 +367,52 @@ public class Player : MonoBehaviour
         return transform.localPosition;
     }
 
-    private CardinalDirection getDirectionFacing()
+    // private CardinalDirection getDirectionFacing()
+    // {
+    //     float angle = transform.eulerAngles.y;
+    //     if (angle >= 45 && angle < 135)
+    //     {
+    //         return CardinalDirection.North;
+    //     }
+    //     else if (angle >= 135 && angle < 225)
+    //     {
+    //         return CardinalDirection.West;
+    //     }
+    //     else if (angle >= 225 && angle < 315)
+    //     {
+    //         return CardinalDirection.South;
+    //     }
+    //     else
+    //     {
+    //         return CardinalDirection.East;
+    //     }
+    // }
+
+    public CardinalDirection getDirectionFacing()
     {
-        float angle = transform.eulerAngles.y;
-        if (angle >= 45 && angle < 135)
+        Vector3 forwardDirection = transform.forward;
+        forwardDirection.Normalize();
+        if (Mathf.Abs(forwardDirection.x) > Mathf.Abs(forwardDirection.z))
         {
-            return CardinalDirection.North;
-        }
-        else if (angle >= 135 && angle < 225)
-        {
-            return CardinalDirection.West;
-        }
-        else if (angle >= 225 && angle < 315)
-        {
-            return CardinalDirection.South;
+            if (forwardDirection.x > 0)
+            {
+                return CardinalDirection.East;
+            }
+            else
+            {
+                return CardinalDirection.West;
+            }
         }
         else
         {
-            return CardinalDirection.East;
+            if (forwardDirection.z > 0)
+            {
+                return CardinalDirection.North;
+            }
+            else
+            {
+                return CardinalDirection.South;
+            }
         }
     }
 

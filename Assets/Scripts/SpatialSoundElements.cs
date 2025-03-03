@@ -30,7 +30,7 @@ public class SpatialSoundElements : MonoBehaviour
             { RelativeDirection.Right, right },
             { RelativeDirection.Forward, forward }
         };
-        StartCoroutine(PerformActionsEveryTwoSeconds());
+        StartCoroutine(PerformActionsEveryFewSeconds());
     }
 
     // Update is called once per frame
@@ -39,12 +39,12 @@ public class SpatialSoundElements : MonoBehaviour
         
     }
 
-    private IEnumerator PerformActionsEveryTwoSeconds()
+    private IEnumerator PerformActionsEveryFewSeconds()
     {
         while (true)
         {
             Debug.Log("Updating sound elements");
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
             if (Game.Instance.getIsPlaying())
             {
                 updateSoundElements();
@@ -56,6 +56,7 @@ public class SpatialSoundElements : MonoBehaviour
 
     private void updateSoundElements()
     {
+        Debug.Log("Updating sound elements");
         foreach (GameObject soundElement in soundElements)
         {
             Destroy(soundElement);
@@ -74,6 +75,7 @@ public class SpatialSoundElements : MonoBehaviour
 
     private void createSoundElement(Vector3 position, RelativeDirection direction)
     {
+        Debug.Log($"Creating sound element at {position} facing {direction}");
         // Create a new GameObject
         GameObject soundElement = new GameObject("SoundElement");
 
@@ -91,6 +93,8 @@ public class SpatialSoundElements : MonoBehaviour
 
         // Set the volume of the audio clip
         audioSource.volume = 1f;
+
+        audioSource.loop = true;
 
         // Play the audio clip
         audioSource.Play();

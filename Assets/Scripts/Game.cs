@@ -144,7 +144,7 @@ public class Game : MonoBehaviour
 
         foreach (var step in solutionPath)
         {
-            Debug.Log($"Path Step: {step}");
+            // Debug.Log($"Path Step: {step}");
         }
 
 
@@ -294,7 +294,7 @@ public class Game : MonoBehaviour
         }
 
         // Display guidance message
-        Debug.Log(guidanceMessage);
+        // Debug.Log(guidanceMessage);
 
         // **Check if the player has reached the goal**
         int2 goalPosition = solutionPath[solutionPath.Count - 1];
