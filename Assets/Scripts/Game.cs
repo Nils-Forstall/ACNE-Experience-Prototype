@@ -53,6 +53,8 @@ public class Game : MonoBehaviour
 
     [SerializeField]
     bool startPlaying; 
+
+    [SerializeField]
     int2 mazeSize = int2(13, 13);
 
     [SerializeField, Tooltip("Use zero for random seed.")]
@@ -66,6 +68,10 @@ public class Game : MonoBehaviour
 
     [SerializeField]
     Player player;
+
+
+    [SerializeField] 
+    bool useEnemies = false;
 
     [SerializeField]
     Agent[] agents;
@@ -154,22 +160,24 @@ public class Game : MonoBehaviour
         player.StartNewGame(maze.CoordinatesToWorldPosition(int2(Random.Range(0, mazeSize.x / 4), Random.Range(0, mazeSize.y / 4))));
 
         int2 halfSize = mazeSize / 2;
-        for (int i = 0; i < agents.Length; i++)
-        {
-            var coordinates =
-                int2(Random.Range(0, mazeSize.x), Random.Range(0, mazeSize.y));
-            if (coordinates.x < halfSize.x && coordinates.y < halfSize.y)
+        if (useEnemies) {
+            for (int i = 0; i < agents.Length; i++)
             {
-                if (Random.value < 0.5f)
+                var coordinates =
+                    int2(Random.Range(0, mazeSize.x), Random.Range(0, mazeSize.y));
+                if (coordinates.x < halfSize.x && coordinates.y < halfSize.y)
                 {
-                    coordinates.x += halfSize.x;
+                    if (Random.value < 0.5f)
+                    {
+                        coordinates.x += halfSize.x;
+                    }
+                    else
+                    {
+                        coordinates.y += halfSize.y;
+                    }
                 }
-                else
-                {
-                    coordinates.y += halfSize.y;
-                }
+                agents[i].StartNewGame(maze, coordinates);
             }
-            agents[i].StartNewGame(maze, coordinates);
         }
     }
 
