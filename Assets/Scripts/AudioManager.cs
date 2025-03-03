@@ -492,6 +492,22 @@ public void LoadSoundSettings()
         audioSource.Play();
     }
 
+    public void PlaySoundFromClip(AudioClip clip)
+    {
+        if (clip == null)
+        {
+            Debug.LogWarning("AudioClip is null.");
+            return;
+        }
+
+        GameObject soundObject = new GameObject("Sound_" + clip.name);
+        soundObject.transform.parent = transform;
+        AudioSource source = soundObject.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.volume = .2f;
+        source.Play();
+    }
+
     private void UpdateSoundSettings()
     {
         foreach (var kvp in _audioSources)

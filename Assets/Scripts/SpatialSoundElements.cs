@@ -18,6 +18,10 @@ public class SpatialSoundElements : MonoBehaviour
     [SerializeField]
     AudioClip forward;
 
+    [SerializeField]
+    AudioClip reset;
+
+
     Dictionary<RelativeDirection, AudioClip> directionToClip;
 
     // Start is called before the first frame update
@@ -44,7 +48,15 @@ public class SpatialSoundElements : MonoBehaviour
         while (true)
         {
             Debug.Log("Updating sound elements");
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2.7f);
+            AudioManager.Instance.PlaySoundFromClip(reset);
+            foreach (GameObject soundElement in soundElements)
+        {
+            Destroy(soundElement);
+        }
+            yield return new WaitForSeconds(0.3f);
+
+
             if (Game.Instance.getIsPlaying())
             {
                 updateSoundElements();
@@ -57,11 +69,11 @@ public class SpatialSoundElements : MonoBehaviour
     private void updateSoundElements()
     {
         Debug.Log("Updating sound elements");
-        foreach (GameObject soundElement in soundElements)
-        {
-            Destroy(soundElement);
-        }
+        
         soundElements.Clear();
+
+        
+
 
         List<(Vector3, RelativeDirection)> soundElementPositions = player.GetOpenSpaces();
         foreach ((Vector3 position, RelativeDirection direction) in soundElementPositions)

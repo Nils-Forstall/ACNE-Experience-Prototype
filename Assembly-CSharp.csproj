@@ -64,15 +64,15 @@
     <Compile Include="Assets/Scripts/MazeSolver.cs" />
     <Compile Include="Assets/Scripts/MazeFlags.cs" />
     <Compile Include="Assets/Scripts/Jobs/FindDiagonalPassagesJob.cs" />
+    <Compile Include="Assets/Scripts/Direction.cs" />
     <Compile Include="Assets/Scripts/Jobs/DisperseScentJob.cs" />
     <Compile Include="Assets/Scripts/Maze.cs" />
     <Compile Include="Assets/Scripts/Agent.cs" />
     <Compile Include="Assets/Scripts/Player.cs" />
+    <Compile Include="Assets/Scripts/SpatialSoundElements.cs" />
     <Compile Include="Assets/Scripts/Scent.cs" />
     <Compile Include="Assets/Scripts/MazeCellObject.cs" />
     <Compile Include="Assets/Scripts/Game.cs" />
-    <Compile Include="Assets/Scripts/SpatialSoundElements.cs" />
-    <Compile Include="Assets/Scripts/Direction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />

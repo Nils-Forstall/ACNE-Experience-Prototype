@@ -973,8 +973,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2084950778}
   left: {fileID: 8300000, guid: e0cd71016ae2b4d3a94e37347b25b79f, type: 3}
-  right: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
-  forward: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
+  right: {fileID: 8300000, guid: c2b35e8a0167749b1964d5b3744f6634, type: 3}
+  forward: {fileID: 0}
+  reset: {fileID: 8300000, guid: b01b122f9dda447d3a0c15dc5c4c2011, type: 3}
 --- !u!4 &1699374630
 Transform:
   m_ObjectHideFlags: 0
