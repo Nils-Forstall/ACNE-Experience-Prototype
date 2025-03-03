@@ -263,10 +263,10 @@ MonoBehaviour:
   visualization: {fileID: 11400000, guid: e4a021dc00b784ff0bf7c21d81717b19, type: 2}
   startPlaying: 0
   mazeSize:
-    x: 5
-    y: 5
-  seed: 0
-  pickLastProbability: 0.5
+    x: 15
+    y: 15
+  seed: 118
+  pickLastProbability: 1
   openDeadEndProbability: 0.5
   openArbitraryProbability: 0.5
   player: {fileID: 2084950778}
@@ -370,6 +370,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7e5d0f338c82b4c07b56495864233736, type: 3}
   - {fileID: 8300000, guid: a03f28998564f445daf7cac167c99369, type: 3}
   - {fileID: 8300000, guid: 651638081edaa44f09154d5222d49432, type: 3}
+  - {fileID: 8300000, guid: 71d40403961bd4fb18f0409e705d53fa, type: 3}
+  - {fileID: 8300000, guid: a9b34adff019046ef9e3d1e8373b27a9, type: 3}
+  - {fileID: 8300000, guid: d1528e44640c84840a75eb27f1701180, type: 3}
+  - {fileID: 8300000, guid: a1f7277f07cf842258c65c30e3b6b56a, type: 3}
+  - {fileID: 8300000, guid: 1b0802df251ad495db7bbef241632363, type: 3}
+  - {fileID: 8300000, guid: c50431e7e1e094171ab18bffe4f55e3f, type: 3}
+  - {fileID: 8300000, guid: aedc2da7b8cfb4c8b81d8bbfc9546c4e, type: 3}
+  - {fileID: 8300000, guid: 06c7e71c45585412abb397447046702e, type: 3}
+  - {fileID: 8300000, guid: b5faccc4541c94a1a84ca184782aedd2, type: 3}
+  - {fileID: 8300000, guid: 7b96ad5a0b8954a51975f7d588beca25, type: 3}
 --- !u!4 &566776127
 Transform:
   m_ObjectHideFlags: 0
@@ -991,6 +1001,7 @@ MonoBehaviour:
   left: {fileID: 8300000, guid: 71d40403961bd4fb18f0409e705d53fa, type: 3}
   right: {fileID: 8300000, guid: a9b34adff019046ef9e3d1e8373b27a9, type: 3}
   forward: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
+  reset: {fileID: 0}
 --- !u!4 &1699374630
 Transform:
   m_ObjectHideFlags: 0
@@ -1319,7 +1330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 0.5
   rotationSpeed: 0.3
-  collisionAudio: Collision2
+  collisionAudio: Center-08
   deadEndAudio: Warning1
   startingVerticalEyeAngle: 10
   MovementScalingFactor: 0.001
