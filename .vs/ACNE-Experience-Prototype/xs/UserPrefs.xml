@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{90288115-E49D-EFE1-4D22-F93E4748889D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SpatialSoundElements.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Agent.cs">
     <Files>
       <File FileName="Assets/Scripts/AudioManager.cs" Line="101" Column="11" />
       <File FileName="Assets/Scripts/Game.cs" />
@@ -7,8 +7,9 @@
       <File FileName="Assets/Scripts/MazeWall.cs" />
       <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioManager.cs" />
       <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/Scene.cs" />
-      <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioDynamicObject.cs" Line="75" Column="1" />
+      <File FileName="Assets/Plugins/SteamAudio/Scripts/Runtime/SteamAudioDynamicObject.cs" />
       <File FileName="Assets/Scripts/SpatialSoundElements.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/Agent.cs" Line="170" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,7 +25,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4b3665c4-7993-41d6-820e-e451b9631982" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4ae4c053-7414-4983-8cfb-a12e3e5d9f33" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

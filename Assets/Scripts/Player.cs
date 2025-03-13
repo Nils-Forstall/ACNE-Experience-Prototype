@@ -8,7 +8,10 @@ using AccessibilityPrototype;
 public class Player : MonoBehaviour
 {
     [SerializeField, Min(0f)]
-    public float movementSpeed = 30f, rotationSpeed = 5f;
+    public float controllerMovementSpeed = 30f, controllerRotationSpeed = 5f;
+
+    [SerializeField, Min(0f)]
+    public float defaultMovementSpeed = 3f, defaultRotationSpeed = 0.5f;
 
     [SerializeField]
     public string collisionAudio = "Collision1";
@@ -19,7 +22,7 @@ public class Player : MonoBehaviour
     float detectionRange = 0.75f;
 
     [SerializeField]
-    float startingVerticalEyeAngle = 10f;
+    float startingVerticalEyeAngle = 0f;
 
     private Maze maze;
 
@@ -31,6 +34,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     public float CameraScalingFactor = 0.01f;
 
+    [SerializeField]
+    bool usingController = false;
+
+    
     private CharacterController characterController;
     private Transform eye;
     private Vector2 eyeAngles;
@@ -39,13 +46,13 @@ public class Player : MonoBehaviour
     public string portName1 = "/dev/tty.usbserial-AQ02O6OD";  // For moveSpeed
     public string portName2 = "/dev/tty.usbserial-AQ02OE6D"; 
     public int baudRate = 115200;
+    public float moveSpeed = 0f;
 
     private SerialPort serialPort1;
     private SerialPort serialPort2;
     private Thread serialThread1;
     private Thread serialThread2;
     private bool isRunning = true;
-    private float moveSpeed = 0f;
     private float cameraSpeed = 0f;
     private bool serialAvailable = true; // Check if controller exists
 
@@ -56,12 +63,17 @@ public class Player : MonoBehaviour
     private bool isTurningRight;
 
     private float previousAngle;
+
+    public float rotationSpeed = 1f;
+    public float movementSpeed = 1f;
     
 
     // private readonly object dataLock = new object();
 
     void Awake()
     {
+        movementSpeed = usingController ? controllerMovementSpeed : defaultMovementSpeed;
+        rotationSpeed = usingController ? controllerRotationSpeed : defaultRotationSpeed;
         characterController = GetComponent<CharacterController>();
         eye = transform.GetChild(0);
     }
@@ -102,13 +114,13 @@ public class Player : MonoBehaviour
             if (delta > 0)
             {
                 Debug.Log("turned right by 90 degrees");
-                renderRightTurning();
+                if (usingController) renderRightTurning();
                 
             }
             else
             {
                 Debug.Log("turned left by 90 degrees");
-                renderLeftTurning();
+                if (usingController) renderLeftTurning();
             }
             previousAngle = eyeAngles.x;
         }
@@ -388,6 +400,10 @@ public class Player : MonoBehaviour
     public Vector3 Move()
     {
         return transform.localPosition;
+    }
+
+    public bool getIsMoving() {
+        return isMovingForward || isMovingBackward;
     }
 
     // private CardinalDirection getDirectionFacing()

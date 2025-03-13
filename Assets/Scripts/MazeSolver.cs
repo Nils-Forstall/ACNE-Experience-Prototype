@@ -58,7 +58,7 @@ public struct MazeSolver
         if (neighbor >= 0 && neighbor < maze.Length && cameFrom[neighbor] == -1)
         {
             // Ensure there is a passage (not a wall)
-            if ((maze[current] & maze[neighbor]) != 0)
+            if ((maze.GetCell(current) & maze.GetCell(neighbor)) != 0)
             {
                 frontier.Enqueue(neighbor);
                 cameFrom[neighbor] = current;

@@ -21,6 +21,13 @@ public class SpatialSoundElements : MonoBehaviour
     [SerializeField]
     AudioClip reset;
 
+    [SerializeField]
+    bool periodicUpdate = true;
+    float timeToWait = 0.3f;
+    bool playedSoundsThisStop = false;
+
+    // Keep track of the last timestamp when the player was moving
+    private float lastMoveTimestamp = 0;
 
     Dictionary<RelativeDirection, AudioClip> directionToClip;
 
@@ -34,13 +41,27 @@ public class SpatialSoundElements : MonoBehaviour
             { RelativeDirection.Right, right },
             { RelativeDirection.Forward, forward }
         };
-        StartCoroutine(PerformActionsEveryFewSeconds());
+        if (periodicUpdate)
+        {
+            StartCoroutine(PerformActionsEveryFewSeconds());
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!periodicUpdate && Game.Instance.getIsPlaying())
+        {
+            if (player.getIsMoving())
+            {
+                lastMoveTimestamp = Time.time;
+                playedSoundsThisStop = false;
+            } else if (!playedSoundsThisStop && Time.time - lastMoveTimestamp > timeToWait)
+            {
+                playedSoundsThisStop = true;
+                updateSoundElements();
+            }
+        } 
     }
 
     private IEnumerator PerformActionsEveryFewSeconds()
@@ -68,6 +89,12 @@ public class SpatialSoundElements : MonoBehaviour
 
     private void updateSoundElements()
     {
+        AudioManager.Instance.PlaySoundFromClip(reset);
+        
+        foreach (GameObject soundElement in soundElements)
+        {
+            Destroy(soundElement);
+        }
         Debug.Log("Updating sound elements");
         
         soundElements.Clear();

@@ -23,7 +23,7 @@ public class MazeVisualization : ScriptableObject
 	{
 		for (int i = 0; i < maze.Length; i++)
 		{
-			(MazeCellObject, int) prefabWithRotation = GetPrefab(maze[i]);
+			(MazeCellObject, int) prefabWithRotation = GetPrefab(maze.GetCell(i));
 			MazeCellObject instance = cellObjects[i] =
 				prefabWithRotation.Item1.GetInstance();
 			instance.transform.SetPositionAndRotation(

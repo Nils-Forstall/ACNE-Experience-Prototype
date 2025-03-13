@@ -56,7 +56,9 @@ public struct GenerateMazeJob : IJob
 				(int, MazeFlags, MazeFlags) passage =
 					scratchpad[random.NextInt(0, availablePassageCount)];
 				maze.Set(index, passage.Item2);
-				maze[passage.Item1] = passage.Item3;
+				maze.GetCell(passage.Item1) = passage.Item3;
+				// rewrite previous line with maze.SetCell
+				maze.SetCell(passage.Item1, passage.Item3);
 				activeIndices[++lastActiveIndex] = passage.Item1;
 			}
 		}
@@ -81,7 +83,7 @@ public struct GenerateMazeJob : IJob
 		if (coordinates.x + 1 < maze.SizeEW)
 		{
 			int i = index + maze.StepE;
-			if (maze[i] == MazeFlags.Empty)
+			if (maze.GetCell(i) == MazeFlags.Empty)
 			{
 				scratchpad[count++] = (i, MazeFlags.PassageE, MazeFlags.PassageW);
 			}
@@ -89,7 +91,7 @@ public struct GenerateMazeJob : IJob
 		if (coordinates.x > 0)
 		{
 			int i = index + maze.StepW;
-			if (maze[i] == MazeFlags.Empty)
+			if (maze.GetCell(i) == MazeFlags.Empty)
 			{
 				scratchpad[count++] = (i, MazeFlags.PassageW, MazeFlags.PassageE);
 			}
@@ -97,7 +99,7 @@ public struct GenerateMazeJob : IJob
 		if (coordinates.y + 1 < maze.SizeNS)
 		{
 			int i = index + maze.StepN;
-			if (maze[i] == MazeFlags.Empty)
+			if (maze.GetCell(i) == MazeFlags.Empty)
 			{
 				scratchpad[count++] = (i, MazeFlags.PassageN, MazeFlags.PassageS);
 			}
@@ -105,7 +107,7 @@ public struct GenerateMazeJob : IJob
 		if (coordinates.y > 0)
 		{
 			int i = index + maze.StepS;
-			if (maze[i] == MazeFlags.Empty)
+			if (maze.GetCell(i) == MazeFlags.Empty)
 			{
 				scratchpad[count++] = (i, MazeFlags.PassageS, MazeFlags.PassageN);
 			}
@@ -119,13 +121,13 @@ public struct GenerateMazeJob : IJob
 	{
 		for (int i = 0; i < maze.Length; i++)
 		{
-			MazeFlags cell = maze[i];
+			MazeFlags cell = maze.GetCell(i);
 			if (cell.HasExactlyOne() && random.NextFloat() < openDeadEndProbability)
 			{
 				int availablePassageCount = FindClosedPassages(i, scratchpad, cell);
 				(int, MazeFlags, MazeFlags) passage =
 					scratchpad[random.NextInt(0, availablePassageCount)];
-				maze[i] = cell.With(passage.Item2);
+				maze.GetCell(i) = cell.With(passage.Item2);
 				maze.Set(i + passage.Item1, passage.Item3);
 			}
 		}

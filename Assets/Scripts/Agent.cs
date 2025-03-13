@@ -167,7 +167,7 @@ public class Agent : MonoBehaviour
 
 	bool TryFindNewTarget (NativeArray<float> scent)
 	{
-		MazeFlags cell = maze[targetIndex];
+		MazeFlags cell = maze.GetCell(targetIndex);
 		(int, float) trail = (0, isGoal ? float.MaxValue : 0f);
 
 		if (cell.Has(MazeFlags.PassageNE))

@@ -15,7 +15,7 @@ public struct DisperseScentJob : IJobFor
 
 	public void Execute (int i)
 	{
-		MazeFlags cell = maze[i];
+		MazeFlags cell = maze.GetCell(i);
 		float scent = oldScent[i];
 
 		float fromNeighbors = 0f;

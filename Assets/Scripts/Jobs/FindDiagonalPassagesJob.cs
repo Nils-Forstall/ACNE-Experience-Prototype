@@ -9,35 +9,35 @@ public struct FindDiagonalPassagesJob : IJobFor
 
 	public void Execute (int i)
 	{
-		MazeFlags cell = maze[i];
+		MazeFlags cell = maze.GetCell(i);
 		if (
 			cell.Has(MazeFlags.PassageN | MazeFlags.PassageE) &&
-			maze[i + maze.StepN + maze.StepE].Has(MazeFlags.PassageS | MazeFlags.PassageW)
+			maze.GetCell(i + maze.StepN + maze.StepE).Has(MazeFlags.PassageS | MazeFlags.PassageW)
 		)
 		{
 			cell = cell.With(MazeFlags.PassageNE);
 		}
 		if (
 			cell.Has(MazeFlags.PassageN | MazeFlags.PassageW) &&
-			maze[i + maze.StepN + maze.StepW].Has(MazeFlags.PassageS | MazeFlags.PassageE)
+			maze.GetCell(i + maze.StepN + maze.StepW).Has(MazeFlags.PassageS | MazeFlags.PassageE)
 		)
 		{
 			cell = cell.With(MazeFlags.PassageNW);
 		}
 		if (
 			cell.Has(MazeFlags.PassageS | MazeFlags.PassageE) &&
-			maze[i + maze.StepS + maze.StepE].Has(MazeFlags.PassageN | MazeFlags.PassageW)
+			maze.GetCell(i + maze.StepS + maze.StepE).Has(MazeFlags.PassageN | MazeFlags.PassageW)
 		)
 		{
 			cell = cell.With(MazeFlags.PassageSE);
 		}
 		if (
 			cell.Has(MazeFlags.PassageS | MazeFlags.PassageW) &&
-			maze[i + maze.StepS + maze.StepW].Has(MazeFlags.PassageN | MazeFlags.PassageE)
+			maze.GetCell(i + maze.StepS + maze.StepW).Has(MazeFlags.PassageN | MazeFlags.PassageE)
 		)
 		{
 			cell = cell.With(MazeFlags.PassageSW);
 		}
-		maze[i] = cell;
+		maze.GetCell(i) = cell;
 	}
 }

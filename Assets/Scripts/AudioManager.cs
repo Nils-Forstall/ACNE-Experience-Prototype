@@ -504,7 +504,7 @@ public void LoadSoundSettings()
         soundObject.transform.parent = transform;
         AudioSource source = soundObject.AddComponent<AudioSource>();
         source.clip = clip;
-        source.volume = .2f;
+        source.volume = .1f;
         source.Play();
     }
 
