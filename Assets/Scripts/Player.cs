@@ -151,12 +151,12 @@ public class Player : MonoBehaviour
 
     void PlayForwardAudio()
     {
-        AudioManager.Instance.PlaySound("ForwardBackward");
+        AudioManager.Instance.PlaySound("walking");
     }
 
     void PlayBackwardAudio()
     {
-        AudioManager.Instance.PlaySound("ForwardBackward");
+        AudioManager.Instance.PlaySound("walking");
     }
 
       void TurnRight() {
