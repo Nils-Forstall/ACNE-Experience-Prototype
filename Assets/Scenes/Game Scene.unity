@@ -270,7 +270,7 @@ MonoBehaviour:
   openDeadEndProbability: 0.5
   openArbitraryProbability: 0.5
   player: {fileID: 2084950778}
-  useEnemies: 0
+  useEnemies: 1
   agents:
   - {fileID: 1330302369}
   displayText: {fileID: 7270601477899884428}
@@ -643,7 +643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: speed
-      value: 0.7
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2196200014881906742, guid: 40c9947a163a3418a8d9ee294f9d608c, type: 3}
       propertyPath: player
@@ -998,9 +998,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2084950778}
-  left: {fileID: 8300000, guid: 71d40403961bd4fb18f0409e705d53fa, type: 3}
-  right: {fileID: 8300000, guid: a9b34adff019046ef9e3d1e8373b27a9, type: 3}
-  forward: {fileID: 8300000, guid: 5c9dec60d6be94fdbaa1ce15f5ea6607, type: 3}
+  left: {fileID: 8300000, guid: d1528e44640c84840a75eb27f1701180, type: 3}
+  right: {fileID: 8300000, guid: b5faccc4541c94a1a84ca184782aedd2, type: 3}
+  forward: {fileID: 8300000, guid: 7b96ad5a0b8954a51975f7d588beca25, type: 3}
   reset: {fileID: 0}
 --- !u!4 &1699374630
 Transform:
@@ -1328,9 +1328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a9b7a13cd754c04b32547c1bfc9cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 20
-  rotationSpeed: 5
-  collisionAudio: Center-08
+  movementSpeed: 10
+  rotationSpeed: 0.5
+  collisionAudio: Center-01
   deadEndAudio: Warning1
   startingVerticalEyeAngle: 10
   MovementScalingFactor: 0.001

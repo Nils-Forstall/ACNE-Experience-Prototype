@@ -103,7 +103,6 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("turned right by 90 degrees");
                 renderRightTurning();
-                
             }
             else
             {
@@ -468,17 +467,27 @@ void renderCollision()
             serialPort1.WriteLine(data1.ToString());
             Debug.Log("Sent data on Serial Port1: " + data1);
     }
+    
     void renderLeftTurning()
     {
             float data2 = 20.0f;
-            serialPort2.WriteLine(data2.ToString());
-            Debug.Log("Sent data on Serial Port2: " + data2);
+            for (int i = 0; i < 25; i++)
+            {
+                serialPort2.WriteLine(data2.ToString());
+                Debug.Log("Sent data on Serial Port2: " + data2);
+                i += 1;
+            }
+            
     }
     void renderRightTurning()
     {
             float data2 = -20.0f;
-            serialPort2.WriteLine(data2.ToString());
-            Debug.Log("Sent data on Serial Port2: " + data2);
+            for (int i = 0; i < 25; i++)
+            {
+                serialPort2.WriteLine(data2.ToString());
+                Debug.Log("Sent data on Serial Port2: " + data2);
+                i += 1;
+            }
     }
 
 }
