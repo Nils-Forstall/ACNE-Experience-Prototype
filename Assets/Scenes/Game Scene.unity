@@ -317,12 +317,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_Volume
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: c2b35e8a0167749b1964d5b3744f6634, type: 3}
+      objectReference: {fileID: 8300000, guid: 9fb194dcfadb44c7fa9eed1d49153109, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
 --- !u!1 &469549572
@@ -459,6 +459,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7e5d0f338c82b4c07b56495864233736, type: 3}
   - {fileID: 8300000, guid: a03f28998564f445daf7cac167c99369, type: 3}
   - {fileID: 8300000, guid: 651638081edaa44f09154d5222d49432, type: 3}
+  - {fileID: 8300000, guid: 48180f09f621f44889d1cf16488310f3, type: 3}
 --- !u!4 &566776127
 Transform:
   m_ObjectHideFlags: 0
@@ -553,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 6fc755126e1b14e078ae6f701cdc450b, type: 3}
+      objectReference: {fileID: 8300000, guid: b448842ff8f9f4f0d87e43a932d49bb0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
 --- !u!4 &602188775 stripped
@@ -630,12 +631,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_Volume
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7481119829764476117, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: e0cd71016ae2b4d3a94e37347b25b79f, type: 3}
+      objectReference: {fileID: 8300000, guid: 9fb194dcfadb44c7fa9eed1d49153109, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbbd6f8d7c16f4f5b8de249560814cf6, type: 3}
 --- !u!4 &669358638 stripped
@@ -1553,8 +1554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a9b7a13cd754c04b32547c1bfc9cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 15
-  rotationSpeed: 0.75
+  movementSpeed: 30
+  rotationSpeed: 1.5
   collisionAudio: Collision2
   deadEndAudio: Warning1
   startingVerticalEyeAngle: 10
